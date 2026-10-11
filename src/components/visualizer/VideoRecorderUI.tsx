@@ -90,7 +90,7 @@ export function VideoRecorderUI({ containerRef, dsId, operation }: VideoRecorder
           </p>
         )}
         <button
-          onClick={startRecording}
+          onClick={() => startRecording(`${dsId}${operation ? ` · ${operation}` : ''}`)}
           className="flex h-9 items-center justify-center gap-2 rounded-lg border border-white/10 px-3 text-xs text-slate-300 hover:bg-white/5 transition"
           aria-label="Start video recording"
           title="Record animation as WebM video"

@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Build outputs
+.next
+out
+tsconfig.tsbuildinfo
+test-results
+playwright-report
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
