@@ -1,0 +1,22 @@
+package main
+
+import "fmt"
+
+func traverse(arr []int) {
+    for i, v := range arr {
+        fmt.Printf("arr[%d] = %d
+", i, v)
+    }
+}
+
+func traverseReverse(arr []int) {
+    for i := len(arr) - 1; i >= 0; i-- {
+        fmt.Printf("arr[%d] = %d
+", i, arr[i])
+    }
+}
+
+func main() {
+    arr := []int{10, 20, 30, 40}
+    traverse(arr)
+}

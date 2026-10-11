@@ -1,0 +1,2 @@
+package main
+type HashTable struct { m map[string]int }

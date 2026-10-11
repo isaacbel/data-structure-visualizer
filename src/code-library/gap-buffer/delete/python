@@ -1,0 +1,58 @@
+class GapBuffer:
+    """
+    Gap Buffer — text editor data structure.
+    Insert/delete at cursor: O(1) amortized.
+    Move gap (cursor): O(n) in worst case.
+    """
+    def __init__(self, initial: str = "", gap_size: int = 8):
+        self._gap_size = gap_size
+        total = len(initial) + gap_size
+        self._buf = list(initial) + [None] * gap_size
+        self._gap_start = len(initial)
+        self._gap_end   = len(initial) + gap_size
+
+    def insert(self, ch: str) -> None:
+        if self._gap_start == self._gap_end:
+            self._grow()
+        self._buf[self._gap_start] = ch
+        self._gap_start += 1
+
+    def delete(self) -> str | None:
+        """Delete char before cursor (backspace)."""
+        if self._gap_start == 0: return None
+        self._gap_start -= 1
+        ch = self._buf[self._gap_start]
+        self._buf[self._gap_start] = None
+        return ch
+
+    def move_gap(self, pos: int) -> None:
+        """Move cursor to absolute position."""
+        if pos < self._gap_start:
+            delta = self._gap_start - pos
+            for _ in range(delta):
+                self._gap_end   -= 1
+                self._gap_start -= 1
+                self._buf[self._gap_end] = self._buf[self._gap_start]
+                self._buf[self._gap_start] = None
+        elif pos > self._gap_start:
+            delta = pos - self._gap_start
+            for _ in range(delta):
+                self._buf[self._gap_start] = self._buf[self._gap_end]
+                self._buf[self._gap_end]   = None
+                self._gap_start += 1
+                self._gap_end   += 1
+
+    def _grow(self) -> None:
+        new_gap = [None] * self._gap_size
+        self._buf[self._gap_end:self._gap_end] = new_gap
+        self._gap_end += self._gap_size
+
+    def content(self) -> str:
+        return "".join(c for c in self._buf if c is not None)
+
+gb = GapBuffer("hello world")
+gb.move_gap(5)
+gb.insert(",")
+print(gb.content())  # "hello, world"
+gb.delete()
+print(gb.content())  # "hello world"

@@ -1,0 +1,10 @@
+public class DoublyLinkedList<T>{
+    static class Node<T>{T v;Node<T>p,n;Node(T x){v=x;}}
+    Node<T>head,tail;
+    void insertHead(T v){Node<T>n=new Node<>(v);n.n=head;if(head!=null)head.p=n;else tail=n;head=n;}
+    void insertTail(T v){Node<T>n=new Node<>(v);n.p=tail;if(tail!=null)tail.n=n;else head=n;tail=n;}
+    boolean delete(T v){Node<T>c=head;while(c!=null){if(c.v.equals(v)){if(c.p!=null)c.p.n=c.n;else head=c.n;if(c.n!=null)c.n.p=c.p;else tail=c.p;return true;}c=c.n;}return false;}
+    boolean search(T v){Node<T>c=head;while(c!=null){if(c.v.equals(v))return true;c=c.n;}return false;}
+    void traverse(){Node<T>c=head;while(c!=null){System.out.print(c.v+"<->");c=c.n;}System.out.println("null");}
+    public static void main(String[]a){DoublyLinkedList<Integer>dll=new DoublyLinkedList<>();dll.insertHead(20);dll.insertHead(10);dll.insertTail(30);dll.traverse();dll.delete(20);dll.traverse();}
+}

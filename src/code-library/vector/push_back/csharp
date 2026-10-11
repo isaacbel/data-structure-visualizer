@@ -1,0 +1,13 @@
+using System;
+using System.Collections.Generic;
+
+public class VectorPushBack {
+    public static void Main() {
+        var v = new List<int>(4);  // initial capacity
+        v.Add(10);  // push_back — O(1) amortized
+        v.Add(20);
+        v.Add(30);
+        Console.WriteLine(string.Join(", ", v));  // 10, 20, 30
+        Console.WriteLine("Count: " + v.Count);
+    }
+}

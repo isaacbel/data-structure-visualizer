@@ -1,0 +1,8 @@
+class GapBuffer{
+    private _buf:(string|null)[];private _gs:number;private _ge:number;
+    constructor(s:string='',gapSize=8){const n=s.length;this._buf=[...s,...new Array(gapSize).fill(null)];this._gs=n;this._ge=n+gapSize;}
+    insert(c:string):void{this._buf[this._gs++]=c;}
+    delete():string|null{if(this._gs===0)return null;this._gs--;const c=this._buf[this._gs];this._buf[this._gs]=null;return c;}
+    moveGap(pos:number):void{while(this._gs>pos){this._ge--;this._gs--;this._buf[this._ge]=this._buf[this._gs];this._buf[this._gs]=null;}while(this._gs<pos){this._buf[this._gs]=this._buf[this._ge];this._buf[this._ge]=null;this._gs++;this._ge++;}}
+    content():string{return this._buf.filter((c):c is string=>c!==null).join('');}
+}

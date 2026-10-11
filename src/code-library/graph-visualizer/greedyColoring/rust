@@ -1,0 +1,2 @@
+struct Edge { to: usize, weight: i32 }
+struct Graph { v: usize, adj: Vec<Vec<Edge>> }

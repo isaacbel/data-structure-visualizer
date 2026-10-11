@@ -1,0 +1,40 @@
+pub struct UnionFind {
+    parent: Vec<usize>,
+    rank: Vec<usize>,
+}
+
+impl UnionFind {
+    pub fn new(n: usize) -> Self {
+        let parent = (0..n).collect();
+        let rank = vec![0; n];
+        UnionFind { parent, rank }
+    }
+
+    pub fn find(&mut self, i: usize) -> usize {
+        if self.parent[i] == i {
+            i
+        } else {
+            let root = self.find(self.parent[i]);
+            self.parent[i] = root;
+            root
+        }
+    }
+
+    pub fn union(&mut self, i: usize, j: usize) -> bool {
+        let root_i = self.find(i);
+        let root_j = self.find(j);
+        if root_i != root_j {
+            if self.rank[root_i] < self.rank[root_j] {
+                self.parent[root_i] = root_j;
+            } else if self.rank[root_i] > self.rank[root_j] {
+                self.parent[root_j] = root_i;
+            } else {
+                self.parent[root_j] = root_i;
+                self.rank[root_i] += 1;
+            }
+            true
+        } else {
+            false
+        }
+    }
+}

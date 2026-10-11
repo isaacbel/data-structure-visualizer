@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+
+public class ArrayInsert {
+    // Insert into List<T> at index. O(n).
+    public static void Insert<T>(List<T> arr, int index, T value) {
+        arr.Insert(index, value);
+    }
+
+    // Insert into int array (pre-sized, track length manually). O(n).
+    public static void InsertRaw(int[] arr, ref int n, int index, int value) {
+        for (int i = n; i > index; i--)
+            arr[i] = arr[i - 1];
+        arr[index] = value;
+        n++;
+    }
+
+    public static void Main() {
+        var list = new List<int> { 10, 20, 30, 40 };
+        Insert(list, 2, 99);
+        Console.WriteLine(string.Join(", ", list));  // 10, 20, 99, 30, 40
+    }
+}

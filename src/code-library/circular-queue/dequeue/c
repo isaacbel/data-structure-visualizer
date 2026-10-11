@@ -1,0 +1,15 @@
+#include <stdio.h>
+#define CAP 4   /* stores up to CAP-1 elements */
+typedef struct { int data[CAP]; int head, tail; } CQ;
+void  cq_init(CQ *q)          { q->head = q->tail = 0; }
+int   cq_empty(CQ *q)         { return q->head == q->tail; }
+int   cq_full(CQ *q)          { return (q->tail + 1) % CAP == q->head; }
+int   cq_enqueue(CQ *q, int v){ if (cq_full(q)) return 0; q->data[q->tail]=(v); q->tail=(q->tail+1)%CAP; return 1; }
+int   cq_dequeue(CQ *q)       { if (cq_empty(q)) return -1; int v=q->data[q->head]; q->head=(q->head+1)%CAP; return v; }
+int   cq_peek(CQ *q)          { return cq_empty(q) ? -1 : q->data[q->head]; }
+int main(void){
+    CQ q; cq_init(&q);
+    cq_enqueue(&q,1); cq_enqueue(&q,2); cq_enqueue(&q,3);
+    printf("peek=%d deq=%d\n", cq_peek(&q), cq_dequeue(&q));  // 1 1
+    return 0;
+}

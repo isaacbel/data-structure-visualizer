@@ -1,0 +1,12 @@
+#include <vector>
+#include <iostream>
+int main() {
+    std::vector<int> v = {10,20,30,40};
+    std::cout << v[2]      << "
+";  // 30 — unchecked O(1)
+    std::cout << v.at(2)   << "
+";  // 30 — bounds-checked O(1)
+    v[2] = 99;
+    std::cout << v[2] << "
+";       // 99
+}

@@ -1,0 +1,10 @@
+public class CircularQueue<T> {
+    private T[] _data; private int _head, _tail, _cap;
+    public CircularQueue(int capacity) { _cap=capacity+1; _data=new T[_cap]; }
+    public bool Enqueue(T v){ if(IsFull) return false; _data[_tail]=v; _tail=(_tail+1)%_cap; return true; }
+    public T    Dequeue()   { if(IsEmpty) throw new System.InvalidOperationException(); T v=_data[_head]; _head=(_head+1)%_cap; return v; }
+    public T    Peek()      { if(IsEmpty) throw new System.InvalidOperationException(); return _data[_head]; }
+    public bool IsEmpty     => _head==_tail;
+    public bool IsFull      => (_tail+1)%_cap==_head;
+    public int  Size        => (_tail-_head+_cap)%_cap;
+}

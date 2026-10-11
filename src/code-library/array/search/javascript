@@ -1,0 +1,52 @@
+// ─── Array Search: Linear Search & Binary Search ─────────────────────────────
+// Time Complexity:  Linear O(n) | Binary O(log n)
+// Space Complexity: O(1)
+
+/**
+ * Linear search — works on any unsorted array.
+ * @param {any[]} arr - The array to search
+ * @param {any} target - Value to find
+ * @returns {number} Index of first match, or -1
+ */
+function linearSearch(arr, target) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) return i;  // Found — return immediately
+  }
+  return -1;                           // Not found
+}
+
+/**
+ * Binary search — requires a SORTED array.
+ * Eliminates half the search space at each step → O(log n).
+ * @param {number[]} arr - Sorted array
+ * @param {number} target - Value to find
+ * @returns {number} Index of target, or -1
+ */
+function binarySearch(arr, target) {
+  let lo = 0, hi = arr.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >>> 1;      // Unsigned right shift = floor((lo+hi)/2), avoids overflow
+    if (arr[mid] === target) return mid;
+    else if (arr[mid] < target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}
+
+/**
+ * Binary search — recursive version.
+ */
+function binarySearchRecursive(arr, target, lo = 0, hi = arr.length - 1) {
+  if (lo > hi) return -1;
+  const mid = (lo + hi) >>> 1;
+  if (arr[mid] === target) return mid;
+  if (arr[mid] < target) return binarySearchRecursive(arr, target, mid + 1, hi);
+  return binarySearchRecursive(arr, target, lo, mid - 1);
+}
+
+// ─── Example ──────────────────────────────────────────────────────────────────
+const sorted = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91];
+console.log(linearSearch(sorted, 23));          // 5
+console.log(binarySearch(sorted, 23));          // 5
+console.log(binarySearch(sorted, 99));          // -1
+console.log(binarySearchRecursive(sorted, 38)); // 6

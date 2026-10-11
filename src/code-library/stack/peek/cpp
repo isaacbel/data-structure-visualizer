@@ -1,0 +1,24 @@
+#include <stack>
+#include <iostream>
+#include <stdexcept>
+
+// Using STL stack:
+void demo_stl() {
+    std::stack<int> s;
+    s.push(10); s.push(20); s.push(30);
+    std::cout << "peek=" << s.top() << "\n";   // 30
+    s.pop();
+    std::cout << "size=" << s.size() << "\n";  // 2
+}
+
+// Manual implementation with vector:
+template<typename T>
+class Stack {
+    std::vector<T> data;
+public:
+    void push(T v)  { data.push_back(v); }
+    T    pop()      { if (data.empty()) throw std::underflow_error(""); T v=data.back(); data.pop_back(); return v; }
+    T&   peek()     { if (data.empty()) throw std::underflow_error(""); return data.back(); }
+    bool empty()    { return data.empty(); }
+    int  size()     { return (int)data.size(); }
+};

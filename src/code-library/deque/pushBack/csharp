@@ -1,0 +1,7 @@
+using System;
+using System.Collections.Generic;
+var dq = new LinkedList<int>();
+dq.AddLast(10); dq.AddLast(20); dq.AddFirst(5);
+Console.WriteLine(dq.First!.Value + " " + dq.Last!.Value);  // 5 20
+dq.RemoveFirst(); dq.RemoveLast();
+Console.WriteLine(dq.Count);  // 1

@@ -1,0 +1,47 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+// linearSearch scans every element. Works on unsorted slices.
+// Time: O(n), Space: O(1)
+func linearSearch(arr []int, target int) int {
+	for i, v := range arr {
+		if v == target {
+			return i
+		}
+	}
+	return -1
+}
+
+// binarySearch requires a sorted slice.
+// Eliminates half the search space per iteration. O(log n).
+func binarySearch(arr []int, target int) int {
+	lo, hi := 0, len(arr)-1
+	for lo <= hi {
+		mid := lo + (hi-lo)/2 // Prevents integer overflow
+		switch {
+		case arr[mid] == target:
+			return mid
+		case arr[mid] < target:
+			lo = mid + 1
+		default:
+			hi = mid - 1
+		}
+	}
+	return -1
+}
+
+func main() {
+	arr := []int{2, 5, 8, 12, 16, 23, 38, 56, 72, 91}
+
+	fmt.Println("Linear  [23]:", linearSearch(arr, 23)) // 5
+	fmt.Println("Binary  [23]:", binarySearch(arr, 23)) // 5
+	fmt.Println("Missing [99]:", binarySearch(arr, 99)) // -1
+
+	// Standard library: sort.SearchInts
+	i := sort.SearchInts(arr, 38)
+	fmt.Println("STL     [38]:", i) // 6
+}

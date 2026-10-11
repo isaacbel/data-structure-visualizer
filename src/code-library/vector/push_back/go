@@ -1,0 +1,13 @@
+package main
+
+import "fmt"
+
+func main() {
+    v := make([]int, 0, 4)  // length=0, capacity=4
+    v = append(v, 10)       // push_back — O(1) amortized
+    v = append(v, 20)
+    v = append(v, 30)
+    fmt.Println(v)       // [10 20 30]
+    fmt.Println(len(v))  // 3
+    fmt.Println(cap(v))  // 4
+}

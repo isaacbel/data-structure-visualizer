@@ -1,0 +1,34 @@
+class CircularQueue:
+    def __init__(self, capacity: int):
+        self._cap  = capacity + 1   # one slot wasted to distinguish full/empty
+        self._data = [None] * self._cap
+        self._head = 0
+        self._tail = 0
+
+    def enqueue(self, value) -> bool:
+        if self.is_full(): return False
+        self._data[self._tail] = value
+        self._tail = (self._tail + 1) % self._cap
+        return True
+
+    def dequeue(self):
+        if self.is_empty(): raise IndexError("Queue empty")
+        val = self._data[self._head]
+        self._head = (self._head + 1) % self._cap
+        return val
+
+    def peek(self):
+        if self.is_empty(): raise IndexError("Queue empty")
+        return self._data[self._head]
+
+    def is_empty(self) -> bool: return self._head == self._tail
+    def is_full(self)  -> bool: return (self._tail + 1) % self._cap == self._head
+    def size(self)     -> int:  return (self._tail - self._head) % self._cap
+
+if __name__ == "__main__":
+    cq = CircularQueue(3)
+    cq.enqueue(1); cq.enqueue(2); cq.enqueue(3)
+    print(cq.is_full())   # True
+    print(cq.dequeue())   # 1
+    cq.enqueue(4)
+    print(cq.peek())      # 2

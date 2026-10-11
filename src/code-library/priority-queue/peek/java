@@ -1,0 +1,9 @@
+import java.util.PriorityQueue;
+public class PQDemo{
+    public static void main(String[] a){
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)->x[0]-y[0]);
+        pq.offer(new int[]{3,10}); pq.offer(new int[]{1,20}); pq.offer(new int[]{2,30});
+        int[] top = pq.poll();
+        System.out.println("val="+top[1]+" pri="+top[0]);  // val=20 pri=1
+    }
+}

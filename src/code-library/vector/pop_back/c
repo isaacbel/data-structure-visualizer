@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+/* Returns removed element. Decrements size. O(1). */
+int vec_pop_back(int data[], size_t *size) {
+    if (*size == 0) { fprintf(stderr, "pop on empty vector\n"); return -1; }
+    return data[--(*size)];
+}
+
+int main(void) {
+    int data[] = {10, 20, 30};
+    size_t size = 3;
+    int last = vec_pop_back(data, &size);
+    printf("removed: %d, size: %zu\n", last, size);  /* removed: 30, size: 2 */
+    return 0;
+}

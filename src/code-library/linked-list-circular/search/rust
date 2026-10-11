@@ -1,0 +1,9 @@
+struct CLL{data:Vec<i32>}  // simplified: true circular LL in Rust requires unsafe or Rc<RefCell>
+impl CLL{
+    fn new()->Self{CLL{data:vec![]}}
+    fn insert(&mut self,v:i32){self.data.insert(0,v)}
+    fn delete(&mut self,v:i32)->bool{if let Some(i)=self.data.iter().position(|&x|x==v){self.data.remove(i);true}else{false}}
+    fn search(&self,v:i32)->bool{self.data.contains(&v)}
+    fn traverse(&self)->Vec<i32>{self.data.clone()}
+}
+fn main(){let mut c=CLL::new();c.insert(3);c.insert(2);c.insert(1);println!("{:?}",c.traverse());}

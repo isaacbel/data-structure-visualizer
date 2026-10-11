@@ -1,0 +1,5 @@
+using System; using System.Collections.Generic;
+var v = new List<int>{10,20,30,40};
+Console.WriteLine(v[2]);   // 30 — O(1)
+v[2] = 99;
+Console.WriteLine(v[2]);   // 99

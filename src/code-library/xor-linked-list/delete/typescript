@@ -1,0 +1,10 @@
+// TypeScript XOR LL using index-based arena (same concept as Java version):
+class XorLinkedList {
+    private vals:number[]=[0]; private npx:number[]=[0];
+    private head=0; private tail=0; private count=0;
+    private alloc(v:number):number { const id=++this.count; this.vals.push(v); this.npx.push(0); return id; }
+    insertTail(v:number){ const id=this.alloc(v); this.npx[id]=this.tail^0; if(this.tail) this.npx[this.tail]^=id; this.tail=id; if(!this.head) this.head=id; }
+    traverse():number[]{ const r:number[]=[]; let cur=this.head,prev=0; while(cur){ r.push(this.vals[cur]); const next=this.npx[cur]^prev; prev=cur; cur=next; } return r; }
+    insertHead(v:number){ const id=this.alloc(v); this.npx[id]=0^this.head; if(this.head) this.npx[this.head]^=id; this.head=id; if(!this.tail) this.tail=id; }
+    delete(v:number):boolean{ let cur=this.head,prev=0; while(cur){ if(this.vals[cur]===v){ const next=this.npx[cur]^prev; if(prev) this.npx[prev]=this.npx[prev]^cur^next; else this.head=next; if(next) this.npx[next]=this.npx[next]^cur^prev; else this.tail=prev; return true; } const next=this.npx[cur]^prev; prev=cur; cur=next; } return false; }
+}

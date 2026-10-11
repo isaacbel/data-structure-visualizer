@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define TABLE_SIZE 10
+
+typedef struct Node {
+    int key;
+    int val;
+    struct Node* next;
+} Node;
+
+typedef struct {
+    Node* buckets[TABLE_SIZE];
+} HashTable;
+
+int hash_func(int key) { return abs(key) % TABLE_SIZE; }
+
+void insert(HashTable* ht, int key, int val) {
+    int idx = hash_func(key);
+    Node* n = (Node*)malloc(sizeof(Node));
+    n->key = key; n->val = val; n->next = ht->buckets[idx];
+    ht->buckets[idx] = n;
+}

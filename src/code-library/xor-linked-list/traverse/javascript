@@ -1,0 +1,16 @@
+// JavaScript has no raw pointers. Simulating XOR LL with object IDs stored in a Map:
+class XorNode { constructor(val){ this.val=val; this.npx=null; } }
+class XorLinkedList {
+    constructor(){ this._head=null; this._tail=null; this._map=new Map(); this._nextId=1; }
+    _getId(node){ for(const[id,n] of this._map) if(n===node) return id; return 0; }
+    _xor(a,b){ return a^b; }
+    insertTail(val){
+        const node=new XorNode(val); const id=this._nextId++; this._map.set(id,node);
+        const tailId=this._getId(this._tail);
+        node.npx=this._xor(tailId,0);
+        if(this._tail) this._tail.npx=this._xor(this._xor(this._tail.npx,0),id);
+        this._tail=node; if(!this._head) this._head=node;
+    }
+    traverse(){ const r=[]; let cur=this._head,prev=0; while(cur){ r.push(cur.val); const curId=this._getId(cur); const nextId=this._xor(prev,cur.npx); prev=curId; cur=this._map.get(nextId)||null; } return r; }
+}
+const l=new XorLinkedList(); l.insertTail(10); l.insertTail(20); l.insertTail(30); console.log(l.traverse());

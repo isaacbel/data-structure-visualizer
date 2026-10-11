@@ -1,0 +1,3 @@
+#include <stdio.h>
+#include <stdbool.h>
+typedef struct TrieNode { struct TrieNode* children[26]; bool is_end; } TrieNode;

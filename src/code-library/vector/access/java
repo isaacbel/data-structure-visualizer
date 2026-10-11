@@ -1,0 +1,9 @@
+import java.util.*;
+public class VectorAccess {
+    public static void main(String[] args) {
+        ArrayList<Integer> v = new ArrayList<>(Arrays.asList(10,20,30,40));
+        System.out.println(v.get(2));   // O(1) -> 30
+        v.set(2, 99);
+        System.out.println(v.get(2));   // 99
+    }
+}

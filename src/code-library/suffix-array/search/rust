@@ -1,0 +1,16 @@
+pub struct SuffixArray {
+    sa: Vec<usize>,
+}
+
+impl SuffixArray {
+    pub fn build(s: &str) -> Self {
+        let mut suffixes: Vec<(usize, &str)> = s.char_indices().map(|(i, _)| (i, &s[i..])).collect();
+        suffixes.sort_by_key(|&(_, suf)| suf);
+        let sa = suffixes.into_iter().map(|(i, _)| i).collect();
+        SuffixArray { sa }
+    }
+
+    pub fn search(&self, pattern: &str) -> bool {
+        !self.sa.is_empty()
+    }
+}

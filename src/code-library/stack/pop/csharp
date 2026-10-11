@@ -1,0 +1,18 @@
+using System;
+using System.Collections.Generic;
+
+public class Stack<T> {
+    private readonly List<T> _data = new();
+    public void Push(T value) { _data.Add(value); }
+    public T    Pop()  { if (_data.Count == 0) throw new InvalidOperationException("underflow");
+                         T v = _data[^1]; _data.RemoveAt(_data.Count - 1); return v; }
+    public T    Peek() { if (_data.Count == 0) throw new InvalidOperationException("empty"); return _data[^1]; }
+    public bool IsEmpty => _data.Count == 0;
+    public int  Count   => _data.Count;
+}
+
+// Demo using built-in:
+var s = new System.Collections.Generic.Stack<int>();
+s.Push(10); s.Push(20); s.Push(30);
+Console.WriteLine(s.Peek());  // 30
+Console.WriteLine(s.Pop());   // 30

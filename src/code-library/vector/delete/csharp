@@ -1,0 +1,8 @@
+using System; using System.Collections.Generic;
+public class VectorDelete {
+    public static void Main() {
+        var v = new List<int>{10,20,30,40};
+        v.RemoveAt(2);  // O(n)
+        Console.WriteLine(string.Join(", ", v));  // 10, 20, 40
+    }
+}

@@ -1,0 +1,8 @@
+class Graph {
+    constructor(v) {
+        this.V = v;
+        this.adj = new Map();
+        for(let i=0; i<v; i++) this.adj.set(i, []);
+    }
+    addEdge(u, v, w=1) { this.adj.get(u).push({node: v, weight: w}); }
+}

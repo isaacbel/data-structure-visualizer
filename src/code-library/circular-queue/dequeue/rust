@@ -1,0 +1,26 @@
+struct CircularQueue { data: Vec<i32>, head: usize, tail: usize, cap: usize }
+impl CircularQueue {
+    fn new(capacity: usize) -> Self {
+        CircularQueue { data: vec![0; capacity+1], head:0, tail:0, cap:capacity+1 }
+    }
+    fn enqueue(&mut self, v: i32) -> bool {
+        if self.is_full() { return false; }
+        self.data[self.tail] = v;
+        self.tail = (self.tail + 1) % self.cap;
+        true
+    }
+    fn dequeue(&mut self) -> Option<i32> {
+        if self.is_empty() { return None; }
+        let v = self.data[self.head];
+        self.head = (self.head + 1) % self.cap;
+        Some(v)
+    }
+    fn peek(&self) -> Option<i32> { if self.is_empty() { None } else { Some(self.data[self.head]) } }
+    fn is_empty(&self) -> bool { self.head == self.tail }
+    fn is_full(&self)  -> bool { (self.tail + 1) % self.cap == self.head }
+}
+fn main() {
+    let mut q = CircularQueue::new(3);
+    q.enqueue(1); q.enqueue(2); q.enqueue(3);
+    println!("{:?} {:?}", q.peek(), q.dequeue());  // Some(1) Some(1)
+}

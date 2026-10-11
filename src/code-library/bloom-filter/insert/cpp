@@ -1,0 +1,10 @@
+#include <unordered_map>
+#include <iostream>
+
+int main() {
+    std::unordered_map<std::string, int> map;
+    map["apple"] = 1;
+    map["banana"] = 2;
+    std::cout << map["apple"] << "
+";
+}

@@ -1,0 +1,3 @@
+class SegmentTree {
+    constructor(arr) { this.n = arr.length; this.tree = new Array(4 * this.n).fill(0); }
+}

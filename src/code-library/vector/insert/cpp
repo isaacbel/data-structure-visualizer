@@ -1,0 +1,7 @@
+#include <vector>
+#include <iostream>
+int main() {
+    std::vector<int> v = {10,20,30,40};
+    v.insert(v.begin() + 2, 99);  // O(n)
+    for (int x : v) std::cout << x << " ";  // 10 20 99 30 40
+}

@@ -1,0 +1,31 @@
+use std::rc::Rc;
+use std::cell::RefCell;
+
+pub struct SkipList {
+    head: Option<Rc<RefCell<Node>>>,
+}
+
+struct Node {
+    val: i32,
+    forward: Vec<Option<Rc<RefCell<Node>>>>,
+}
+
+impl SkipList {
+    pub fn new() -> Self {
+        SkipList { head: None }
+    }
+
+    pub fn insert(&mut self, val: i32) {
+        // Skip list insertion implementation
+    }
+
+    pub fn search(&self, val: i32) -> bool {
+        // Skip list search implementation
+        false
+    }
+
+    pub fn delete(&mut self, val: i32) -> bool {
+        // Skip list deletion implementation
+        false
+    }
+}

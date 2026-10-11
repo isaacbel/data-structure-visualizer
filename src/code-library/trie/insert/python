@@ -1,0 +1,83 @@
+# ─── Trie (Prefix Tree) ───────────────────────────────────────────────────────
+# Time:  Insert/Search O(k) where k = key length
+# Space: O(n × k × |Σ|)  |Σ| = alphabet size (26 for lowercase)
+
+class TrieNode:
+    __slots__ = ('children', 'is_end', 'count')
+    def __init__(self):
+        self.children: dict = {}   # char → TrieNode (space-efficient vs 26-array)
+        self.is_end: bool   = False
+        self.count: int     = 0    # Words passing through this node
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        """Insert a word into the Trie. O(k)."""
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+            node.count += 1         # Track prefix frequency
+        node.is_end = True
+
+    def search(self, word: str) -> bool:
+        """Return True if word exists in Trie. O(k)."""
+        node = self._get_node(word)
+        return node is not None and node.is_end
+
+    def starts_with(self, prefix: str) -> bool:
+        """Return True if any word starts with prefix. O(k)."""
+        return self._get_node(prefix) is not None
+
+    def delete(self, word: str) -> bool:
+        """Remove word from Trie. Returns True if found. O(k)."""
+        return self._delete(self.root, word, 0)
+
+    def autocomplete(self, prefix: str) -> list:
+        """Return all words starting with prefix. O(k + results)."""
+        node = self._get_node(prefix)
+        if node is None: return []
+        results = []
+        self._dfs(node, prefix, results)
+        return results
+
+    def _get_node(self, s: str):
+        node = self.root
+        for ch in s:
+            if ch not in node.children: return None
+            node = node.children[ch]
+        return node
+
+    def _dfs(self, node: TrieNode, path: str, results: list) -> None:
+        if node.is_end: results.append(path)
+        for ch, child in node.children.items():
+            self._dfs(child, path + ch, results)
+
+    def _delete(self, node: TrieNode, word: str, depth: int) -> bool:
+        if depth == len(word):
+            if not node.is_end: return False
+            node.is_end = False
+            return True
+        ch = word[depth]
+        if ch not in node.children: return False
+        deleted = self._delete(node.children[ch], word, depth + 1)
+        if deleted:
+            if not node.children[ch].children and not node.children[ch].is_end:
+                del node.children[ch]   # Prune empty branches
+        return deleted
+
+if __name__ == '__main__':
+    t = Trie()
+    for w in ["apple", "app", "application", "apply", "apt", "banana"]:
+        t.insert(w)
+
+    print(t.search("apple"))       # True
+    print(t.search("appl"))        # False (not a word)
+    print(t.starts_with("app"))    # True
+    print(t.autocomplete("app"))   # ['app', 'apple', 'application', 'apply']
+    t.delete("app")
+    print(t.search("app"))         # False
+    print(t.autocomplete("app"))   # ['apple', 'application', 'apply']

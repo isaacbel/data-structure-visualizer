@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct { int* parent; int* rank; } UnionFind;
+UnionFind* uf_create(int n) {
+    UnionFind* uf = malloc(sizeof(UnionFind));
+    uf->parent = malloc(n * sizeof(int));
+    uf->rank = calloc(n, sizeof(int));
+    for (int i = 0; i < n; i++) uf->parent[i] = i;
+    return uf;
+}
+int uf_find(UnionFind* uf, int i) {
+    if (uf->parent[i] == i) return i;
+    return uf->parent[i] = uf_find(uf, uf->parent[i]);
+}

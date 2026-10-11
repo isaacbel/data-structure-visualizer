@@ -1,0 +1,11 @@
+package main
+import "fmt"
+// Go XOR LL using index-based arena (uintptr XOR requires unsafe package):
+type XorLL struct { vals []int; npx []int; head,tail,count int }
+func NewXorLL()*XorLL{ return &XorLL{vals:[]int{0},npx:[]int{0}} }
+func(x*XorLL)alloc(v int)int{ x.count++; x.vals=append(x.vals,v); x.npx=append(x.npx,0); return x.count }
+func(x*XorLL)InsertTail(v int){ id:=x.alloc(v); x.npx[id]=x.tail^0; if x.tail!=0{x.npx[x.tail]^=id}; x.tail=id; if x.head==0{x.head=id} }
+func(x*XorLL)InsertHead(v int){ id:=x.alloc(v); x.npx[id]=0^x.head; if x.head!=0{x.npx[x.head]^=id}; x.head=id; if x.tail==0{x.tail=id} }
+func(x*XorLL)Delete(v int)bool{ cur:=x.head; prev:=0; for cur!=0{if x.vals[cur]==v{next:=x.npx[cur]^prev;if prev!=0{x.npx[prev]=x.npx[prev]^cur^next}else{x.head=next};if next!=0{x.npx[next]=x.npx[next]^cur^prev}else{x.tail=prev};return true};next:=x.npx[cur]^prev;prev=cur;cur=next};return false}
+func(x*XorLL)Traverse()[]int{ var r[]int; cur:=x.head; prev:=0; for cur!=0{r=append(r,x.vals[cur]);next:=x.npx[cur]^prev;prev=cur;cur=next}; return r }
+func main(){ x:=NewXorLL(); x.InsertTail(10); x.InsertTail(20); x.InsertTail(30); fmt.Println(x.Traverse()) }

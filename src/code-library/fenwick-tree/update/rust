@@ -1,0 +1,30 @@
+pub struct FenwickTree {
+    tree: Vec<i32>,
+}
+
+impl FenwickTree {
+    pub fn new(n: usize) -> Self {
+        FenwickTree { tree: vec![0; n + 1] }
+    }
+
+    pub fn update(&mut self, mut i: usize, delta: i32) {
+        let n = self.tree.len() - 1;
+        while i <= n {
+            self.tree[i] += delta;
+            i += (i as isize & -(i as isize)) as usize;
+        }
+    }
+
+    pub fn query(&self, mut i: usize) -> i32 {
+        let mut sum = 0;
+        while i > 0 {
+            sum += self.tree[i];
+            i -= (i as isize & -(i as isize)) as usize;
+        }
+        sum
+    }
+
+    pub fn range_query(&self, l: usize, r: usize) -> i32 {
+        self.query(r) - self.query(l - 1)
+    }
+}

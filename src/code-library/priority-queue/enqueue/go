@@ -1,0 +1,14 @@
+package main
+import("container/heap";"fmt")
+type Item struct{ value,priority int }
+type PQ []Item
+func(p PQ) Len() int            { return len(p) }
+func(p PQ) Less(i,j int) bool   { return p[i].priority<p[j].priority }
+func(p PQ) Swap(i,j int)        { p[i],p[j]=p[j],p[i] }
+func(p *PQ) Push(x any)         { *p=append(*p,x.(Item)) }
+func(p *PQ) Pop() any           { old:=*p; n:=len(old); x:=old[n-1]; *p=old[:n-1]; return x }
+func main(){
+    pq:=&PQ{{10,3},{20,1},{30,2}}
+    heap.Init(pq)
+    fmt.Println(heap.Pop(pq).(Item).value)  // 20
+}

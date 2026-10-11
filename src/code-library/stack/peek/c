@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 1000
+typedef struct { int data[MAX]; int top; } Stack;
+
+void stack_init(Stack *s)         { s->top = -1; }
+int  stack_empty(Stack *s)        { return s->top == -1; }
+void stack_push(Stack *s, int v)  { if (s->top >= MAX-1) { fprintf(stderr,"overflow\n"); return; } s->data[++s->top] = v; }
+int  stack_pop (Stack *s)         { if (stack_empty(s)) { fprintf(stderr,"underflow\n"); return -1; } return s->data[s->top--]; }
+int  stack_peek(Stack *s)         { if (stack_empty(s)) { fprintf(stderr,"empty\n"); return -1; } return s->data[s->top]; }
+
+int main(void) {
+    Stack s; stack_init(&s);
+    stack_push(&s, 10); stack_push(&s, 20); stack_push(&s, 30);
+    printf("peek=%d\n", stack_peek(&s));  // 30
+    printf("pop=%d\n",  stack_pop(&s));   // 30
+    printf("size=%d\n", s.top + 1);       // 2
+    return 0;
+}

@@ -1,0 +1,7 @@
+class CLL{
+    constructor(){this.tail=null;}
+    insert(v){const n={v,next:null};if(!this.tail){n.next=n;this.tail=n;}else{n.next=this.tail.next;this.tail.next=n;}}
+    search(v){if(!this.tail)return false;let c=this.tail.next;do{if(c.v===v)return true;c=c.next;}while(c!==this.tail.next);return false;}
+    traverse(){if(!this.tail)return[];const r=[];let c=this.tail.next;do{r.push(c.v);c=c.next;}while(c!==this.tail.next);return r;}
+}
+const c=new CLL();c.insert(3);c.insert(2);c.insert(1);console.log(c.traverse());

@@ -1,0 +1,46 @@
+class RopeNode:
+    def __init__(self, val: str = "", left=None, right=None):
+        self.val   = val
+        self.left  = left
+        self.right = right
+        self.weight = len(val) if not left else left.weight + (left.right.weight if left.right else 0)
+
+class Rope:
+    def __init__(self, s: str = ""):
+        self.root = RopeNode(s) if s else None
+
+    def index(self, i: int) -> str:
+        return self._index(self.root, i)
+
+    def _index(self, node, i: int) -> str:
+        if not node: raise IndexError(i)
+        if node.left is None:
+            return node.val[i]
+        if i < node.weight:
+            return self._index(node.left, i)
+        return self._index(node.right, i - node.weight)
+
+    def concat(self, other: "Rope") -> "Rope":
+        r = Rope()
+        r.root = RopeNode("", self.root, other.root)
+        return r
+
+    def split(self, i: int):
+        left_str = self._to_str(self.root)[:i]
+        right_str = self._to_str(self.root)[i:]
+        return Rope(left_str), Rope(right_str)
+
+    def _to_str(self, node) -> str:
+        if not node: return ""
+        if node.left is None: return node.val
+        return self._to_str(node.left) + self._to_str(node.right)
+
+    def __str__(self) -> str: return self._to_str(self.root)
+
+r1 = Rope("Hello, ")
+r2 = Rope("World!")
+r3 = r1.concat(r2)
+print(str(r3))       # Hello, World!
+print(r3.index(7))   # W
+l, r = r3.split(7)
+print(str(l), str(r))  # Hello,  World!

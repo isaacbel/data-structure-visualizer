@@ -1,0 +1,9 @@
+public class SinglyLinkedList<T> where T : System.IEquatable<T> {
+    private class Node { public T Val; public Node? Next; public Node(T v){Val=v;} }
+    private Node? head;
+    public void InsertHead(T v) { head=new Node(v){Next=head}; }
+    public void InsertTail(T v) { var n=new Node(v); if(head==null){head=n;return;} var c=head; while(c.Next!=null)c=c.Next; c.Next=n; }
+    public bool Delete(T v) { if(head==null) return false; if(head.Val.Equals(v)){head=head.Next;return true;} var c=head; while(c.Next!=null){if(c.Next.Val.Equals(v)){c.Next=c.Next.Next;return true;}c=c.Next;} return false; }
+    public bool Search(T v) { var c=head; while(c!=null){if(c.Val.Equals(v))return true;c=c.Next;} return false; }
+    public System.Collections.Generic.List<T> Traverse() { var r=new System.Collections.Generic.List<T>(); var c=head; while(c!=null){r.Add(c.Val);c=c.Next;} return r; }
+}

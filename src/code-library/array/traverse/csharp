@@ -1,0 +1,19 @@
+using System;
+using System.Collections.Generic;
+
+public class ArrayTraverse {
+    public static void Traverse(int[] arr) {
+        for (int i = 0; i < arr.Length; i++)
+            Console.WriteLine($"arr[{i}] = {arr[i]}");
+    }
+
+    public static void TraverseForeach<T>(IEnumerable<T> arr) {
+        foreach (var x in arr)
+            Console.Write(x + " ");
+        Console.WriteLine();
+    }
+
+    public static void Main() {
+        Traverse(new[] {10, 20, 30, 40});
+    }
+}

@@ -1,0 +1,4 @@
+v = [10, 20, 30]
+last = v.pop()   # pop_back — O(1), returns removed element
+print(last)      # 30
+print(v)         # [10, 20]

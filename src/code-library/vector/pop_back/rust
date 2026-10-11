@@ -1,0 +1,9 @@
+fn pop_back(v: &mut Vec<i32>) -> Option<i32> {
+    v.pop()  // O(1)
+}
+
+fn main() {
+    let mut v = vec![10, 20, 30];
+    println!("{:?}", pop_back(&mut v));  // Some(30)
+    println!("{:?}", v);                 // [10, 20]
+}

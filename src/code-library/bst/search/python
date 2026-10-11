@@ -1,0 +1,80 @@
+# ─── Binary Search Tree: Search ──────────────────────────────────────────────
+# Time Complexity:  Average O(log n) | Worst O(n) if unbalanced
+# Space Complexity: O(h) recursive stack where h = tree height
+
+class TreeNode:
+    """A single node in a Binary Search Tree."""
+    def __init__(self, val: int):
+        self.val = val
+        self.left = None   # Keys less than self.val
+        self.right = None  # Keys greater than self.val
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, val: int):
+        """Insert a value while maintaining BST property."""
+        self.root = self._insert(self.root, val)
+
+    def _insert(self, node, val: int):
+        if node is None:
+            return TreeNode(val)              # Found insertion spot
+        if val < node.val:
+            node.left = self._insert(node.left, val)   # Go left
+        elif val > node.val:
+            node.right = self._insert(node.right, val) # Go right
+        # val == node.val: ignore duplicates (or handle as desired)
+        return node
+
+    def search(self, val: int) -> bool:
+        """
+        Search for val in the BST.
+        At each node: if val == node.val → found.
+                      if val < node.val  → search left subtree.
+                      if val > node.val  → search right subtree.
+        Returns True if found, False otherwise.
+        """
+        return self._search(self.root, val)
+
+    def _search(self, node, val: int) -> bool:
+        if node is None:
+            return False                      # Fell off the tree — not found
+        if val == node.val:
+            return True                       # Exact match found
+        if val < node.val:
+            return self._search(node.left, val)   # Must be in left subtree
+        return self._search(node.right, val)       # Must be in right subtree
+
+    def search_iterative(self, val: int) -> bool:
+        """Iterative search — avoids recursive stack overhead."""
+        curr = self.root
+        while curr is not None:
+            if val == curr.val:
+                return True
+            curr = curr.left if val < curr.val else curr.right
+        return False
+
+    def find_node(self, val: int):
+        """Return the node with the given value, or None."""
+        curr = self.root
+        while curr:
+            if val == curr.val: return curr
+            curr = curr.left if val < curr.val else curr.right
+        return None
+
+# ─── Example usage ───────────────────────────────────────────────────────────
+if __name__ == '__main__':
+    bst = BST()
+    for v in [50, 30, 70, 20, 40, 60, 80]:
+        bst.insert(v)
+
+    #        50
+    #       /  \
+    #      30   70
+    #     / \   / \
+    #    20  40 60  80
+
+    print(bst.search(40))           # True  — O(log n): 50→30→40
+    print(bst.search(99))           # False — O(log n): 50→70→80→None
+    print(bst.search_iterative(60)) # True  — no recursion

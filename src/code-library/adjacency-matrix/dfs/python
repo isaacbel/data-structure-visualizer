@@ -1,0 +1,49 @@
+from collections import deque
+import heapq
+
+class Graph:
+    def __init__(self, vertices):
+        self.V = vertices
+        self.adj = {i: [] for i in range(vertices)}
+
+    def add_edge(self, u, v, w=1):
+        self.adj[u].append((v, w))
+
+    def bfs(self, start):
+        visited = [False] * self.V
+        q = deque([start])
+        visited[start] = True
+        res = []
+        while q:
+            u = q.popleft()
+            res.append(u)
+            for v, _ in self.adj[u]:
+                if not visited[v]:
+                    visited[v] = True
+                    q.append(v)
+        return res
+
+    def dfs(self, start):
+        visited = [False] * self.V
+        res = []
+        def _dfs(u):
+            visited[u] = True
+            res.append(u)
+            for v, _ in self.adj[u]:
+                if not visited[v]:
+                    _dfs(v)
+        _dfs(start)
+        return res
+
+    def dijkstra(self, src):
+        dist = [float('inf')] * self.V
+        dist[src] = 0
+        pq = [(0, src)]
+        while pq:
+            d, u = heapq.heappop(pq)
+            if d > dist[u]: continue
+            for v, w in self.adj[u]:
+                if dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+                    heapq.heappush(pq, (dist[v], v))
+        return dist

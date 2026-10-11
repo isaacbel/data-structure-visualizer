@@ -1,0 +1,41 @@
+struct Node {
+    val: i32,
+    left: Option<Box<Node>>,
+    right: Option<Box<Node>>,
+}
+
+struct BST {
+    root: Option<Box<Node>>,
+}
+
+impl BST {
+    fn new() -> Self { BST { root: None } }
+
+    fn insert(&mut self, val: i32) {
+        Self::insert_rec(&mut self.root, val);
+    }
+
+    fn insert_rec(node: &mut Option<Box<Node>>, val: i32) {
+        if let Some(ref mut n) = node {
+            if val < n.val { Self::insert_rec(&mut n.left, val); }
+            else if val > n.val { Self::insert_rec(&mut n.right, val); }
+        } else {
+            *node = Some(Box::new(Node { val, left: None, right: None }));
+        }
+    }
+
+    fn search(&self, val: i32) -> bool {
+        Self::search_rec(&self.root, val)
+    }
+
+    fn search_rec(node: &Option<Box<Node>>, val: i32) -> bool {
+        match node {
+            Some(ref n) => {
+                if n.val == val { true }
+                else if val < n.val { Self::search_rec(&n.left, val) }
+                else { Self::search_rec(&n.right, val) }
+            }
+            None => false,
+        }
+    }
+}

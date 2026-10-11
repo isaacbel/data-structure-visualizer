@@ -1,0 +1,9 @@
+import heapq
+
+class Heap:
+    def __init__(self): self.h = []
+    def insert(self, val): heapq.heappush(self.h, val)
+    def extract(self): return heapq.heappop(self.h) if self.h else None
+    def heapify(self, arr):
+        self.h = arr[:]
+        heapq.heapify(self.h)

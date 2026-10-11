@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node { int val; struct Node *next; } Node;
+typedef struct { Node *front, *rear; int size; } Queue;
+
+void q_init(Queue *q) { q->front = q->rear = NULL; q->size = 0; }
+int  q_empty(Queue *q){ return q->size == 0; }
+
+void enqueue(Queue *q, int v) {
+    Node *n = malloc(sizeof(Node));
+    n->val = v; n->next = NULL;
+    if (q->rear) q->rear->next = n; else q->front = n;
+    q->rear = n; q->size++;
+}
+
+int dequeue(Queue *q) {
+    if (q_empty(q)) { fprintf(stderr,"empty\n"); return -1; }
+    Node *tmp = q->front; int v = tmp->val;
+    q->front = q->front->next;
+    if (!q->front) q->rear = NULL;
+    free(tmp); q->size--;
+    return v;
+}
+
+int peek(Queue *q) { return q_empty(q) ? -1 : q->front->val; }
+
+int main(void) {
+    Queue q; q_init(&q);
+    enqueue(&q,10); enqueue(&q,20); enqueue(&q,30);
+    printf("peek=%d\n",  peek(&q));     // 10
+    printf("deq=%d\n",   dequeue(&q));  // 10
+    printf("size=%d\n",  q.size);       // 2
+    return 0;
+}

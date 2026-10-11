@@ -1,0 +1,6 @@
+import java.util.PriorityQueue;
+public class Heap {
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    public void insert(int v) { pq.offer(v); }
+    public int extract() { return pq.poll(); }
+}

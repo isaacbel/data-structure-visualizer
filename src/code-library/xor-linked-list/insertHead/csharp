@@ -1,0 +1,9 @@
+// C# XOR LL using index-based arena:
+public class XorLinkedList {
+    int[]vals=new int[1000]; int[]npx=new int[1000]; int head=0,tail=0,count=0;
+    int Alloc(int v){int id=++count;vals[id]=v;npx[id]=0;return id;}
+    public void InsertTail(int v){int id=Alloc(v);npx[id]=tail^0;if(tail!=0)npx[tail]^=id;tail=id;if(head==0)head=id;}
+    public void InsertHead(int v){int id=Alloc(v);npx[id]=0^head;if(head!=0)npx[head]^=id;head=id;if(tail==0)tail=id;}
+    public bool Delete(int v){int cur=head,prev=0;while(cur!=0){if(vals[cur]==v){int next=npx[cur]^prev;if(prev!=0)npx[prev]=npx[prev]^cur^next;else head=next;if(next!=0)npx[next]=npx[next]^cur^prev;else tail=prev;return true;}int nxt=npx[cur]^prev;prev=cur;cur=nxt;}return false;}
+    public int[]Traverse(){var r=new System.Collections.Generic.List<int>();int cur=head,prev=0;while(cur!=0){r.Add(vals[cur]);int next=npx[cur]^prev;prev=cur;cur=next;}return r.ToArray();}
+}

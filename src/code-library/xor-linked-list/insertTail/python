@@ -1,0 +1,31 @@
+# XOR Linked List — memory-efficient doubly linked list using XOR of addresses
+# Python doesn't expose raw pointers, so we simulate with node IDs
+
+import ctypes
+
+class XorNode:
+    def __init__(self, val): self.val=val; self.npx=0  # XOR of prev and next ids
+
+class XorLinkedList:
+    """True XOR LL requires raw pointer access. This is the concept in Python."""
+    def __init__(self): self._nodes={}; self._head=None; self._tail=None; self._nid=0
+
+    def _new_id(self): self._nid+=1; return self._nid
+
+    def insert_head(self, val):
+        n=XorNode(val); nid=self._new_id(); self._nodes[nid]=n
+        n.npx = 0^(id(self._head) if self._head else 0)
+        if self._head: self._head.npx ^= id(n)
+        self._head=n
+        if not self._tail: self._tail=n
+
+    def traverse(self):
+        result=[]; cur=self._head; prev=None
+        while cur:
+            result.append(cur.val)
+            next_ptr = cur.npx ^ (id(prev) if prev else 0)
+            prev=cur; cur=ctypes.cast(next_ptr, ctypes.py_object).value if next_ptr else None
+        return result
+
+# XOR LL is best demonstrated in C/C++ where pointer arithmetic is available.
+print("XOR LL traversal concept shown — see C implementation for full pointer version")

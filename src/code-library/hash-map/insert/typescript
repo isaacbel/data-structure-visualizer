@@ -1,0 +1,6 @@
+class HashTable<K, V> {
+    private map = new Map<K, V>();
+    insert(key: K, val: V): void { this.map.set(key, val); }
+    search(key: K): V | undefined { return this.map.get(key); }
+    delete(key: K): boolean { return this.map.delete(key); }
+}

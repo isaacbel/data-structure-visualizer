@@ -1,0 +1,27 @@
+#include <cstdint>
+#include <iostream>
+
+struct XNode { int val; XNode* npx; XNode(int v):val(v),npx(nullptr){} };
+
+XNode* XOR(XNode* a, XNode* b){return reinterpret_cast<XNode*>(reinterpret_cast<uintptr_t>(a)^reinterpret_cast<uintptr_t>(b));}
+
+class XorLinkedList {
+    XNode *head=nullptr, *tail=nullptr;
+public:
+    void insertHead(int v){
+        XNode*n=new XNode(v); n->npx=XOR(nullptr,head);
+        if(head) head->npx=XOR(n,XOR(nullptr,head->npx));
+        head=n; if(!tail) tail=n;
+    }
+    void insertTail(int v){
+        XNode*n=new XNode(v); n->npx=XOR(tail,nullptr);
+        if(tail) tail->npx=XOR(XOR(tail->npx,nullptr),n);
+        tail=n; if(!head) head=n;
+    }
+    void traverse(){
+        XNode*cur=head,*prev=nullptr,*next;
+        while(cur){ std::cout<<cur->val<<" "; next=XOR(prev,cur->npx); prev=cur; cur=next; }
+        std::cout<<"\n";
+    }
+};
+int main(){ XorLinkedList l; l.insertTail(10); l.insertTail(20); l.insertTail(30); l.traverse(); }

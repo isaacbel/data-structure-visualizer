@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+/* Delete element at index, shift left. O(n). */
+void array_delete(int arr[], int *n, int index) {
+    for (int i = index; i < *n - 1; i++)
+        arr[i] = arr[i + 1];
+    (*n)--;
+}
+
+int main(void) {
+    int arr[] = {10, 20, 30, 40};
+    int n = 4;
+    array_delete(arr, &n, 2);
+    for (int i = 0; i < n; i++) printf("%d ", arr[i]);
+    /* 10 20 40 */
+    return 0;
+}

@@ -1,0 +1,39 @@
+class CNode:
+    def __init__(self,val): self.val=val; self.next=None
+class CircularLinkedList:
+    def __init__(self): self.tail=None; self._size=0
+    def insert(self,v):  # insert at head O(1) with tail pointer
+        n=CNode(v)
+        if not self.tail: n.next=n; self.tail=n
+        else: n.next=self.tail.next; self.tail.next=n
+        self._size+=1
+    def delete(self,v):
+        if not self.tail: return False
+        head=self.tail.next
+        if head.val==v and head==self.tail: self.tail=None; self._size-=1; return True
+        cur=self.tail
+        while cur.next!=self.tail or cur.next.val!=v:
+            if cur.next==self.tail and cur.next.val!=v: return False
+            cur=cur.next
+            if cur==self.tail and cur.next.val!=v: return False
+        # cur.next is node to delete
+        if cur.next==self.tail: self.tail=cur
+        cur.next=cur.next.next; self._size-=1; return True
+    def search(self,v):
+        if not self.tail: return False
+        cur=self.tail.next
+        while True:
+            if cur.val==v: return True
+            cur=cur.next
+            if cur==self.tail.next: break
+        return False
+    def traverse(self):
+        if not self.tail: return []
+        r=[]; cur=self.tail.next
+        while True:
+            r.append(cur.val); cur=cur.next
+            if cur==self.tail.next: break
+        return r
+c=CircularLinkedList()
+c.insert(3); c.insert(2); c.insert(1)
+print(c.traverse())  # [1,2,3]

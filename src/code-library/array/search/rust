@@ -1,0 +1,39 @@
+// ── Array Search: Linear & Binary Search ────────────────────────────────────
+// Time:  Linear O(n) | Binary O(log n)
+// Space: O(1)
+
+/// Linear search — works on any slice, sorted or not.
+fn linear_search<T: PartialEq>(arr: &[T], target: &T) -> Option<usize> {
+    for (i, val) in arr.iter().enumerate() {
+        if val == target {
+            return Some(i);
+        }
+    }
+    None
+}
+
+/// Binary search (iterative) — requires a sorted slice.
+fn binary_search<T: Ord>(arr: &[T], target: &T) -> Option<usize> {
+    let mut lo = 0usize;
+    let mut hi = arr.len();
+    while lo < hi {
+        let mid = lo + (hi - lo) / 2;
+        match arr[mid].cmp(target) {
+            std::cmp::Ordering::Equal   => return Some(mid),
+            std::cmp::Ordering::Less    => lo = mid + 1,
+            std::cmp::Ordering::Greater => hi = mid,
+        }
+    }
+    None
+}
+
+fn main() {
+    let arr = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91];
+
+    println!("Linear  [23]: {:?}", linear_search(&arr, &23));   // Some(5)
+    println!("Binary  [23]: {:?}", binary_search(&arr, &23));   // Some(5)
+    println!("Missing [99]: {:?}", binary_search(&arr, &99));   // None
+
+    // Standard library slice::binary_search
+    println!("STL     [38]: {:?}", arr.binary_search(&38));     // Ok(6)
+}

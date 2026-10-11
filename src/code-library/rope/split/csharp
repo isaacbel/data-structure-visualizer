@@ -1,0 +1,12 @@
+public class Rope{
+    class N{public string Val="";public int W;public N?L,R;public N(string s){Val=s;W=s.Length;}}
+    N root;
+    public Rope(string s){root=new N(s);}
+    Rope(N n){root=n;}
+    public char Index(int i){return Idx(root,i);}
+    char Idx(N n,int i){if(n.L==null)return n.Val[i];if(i<n.W)return Idx(n.L,i);return Idx(n.R!,i-n.W);}
+    public Rope Concat(Rope other){var n=new N(""){W=root.W,L=root,R=other.root};return new Rope(n);}
+    public(Rope,Rope)Split(int i){var s=Collect();return(new Rope(s[..i]),new Rope(s[i..]));}
+    public string Collect(){return Col(root);}
+    string Col(N?n){if(n==null)return"";if(n.L==null)return n.Val;return Col(n.L)+Col(n.R);}
+}

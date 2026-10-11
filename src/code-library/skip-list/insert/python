@@ -1,0 +1,92 @@
+# ─── Skip List ────────────────────────────────────────────────────────────────
+# Time:  Search/Insert/Delete O(log n) expected  |  Space: O(n log n)
+# Probabilistic alternative to balanced BSTs; simpler concurrency.
+import random
+
+class SkipNode:
+    def __init__(self, val, levels: int):
+        self.val     = val
+        self.forward = [None] * levels   # forward[i] = next at level i
+
+class SkipList:
+    MAX_LEVELS = 16     # log₂(max expected elements)
+    P          = 0.5    # Probability of promotion to next level
+
+    def __init__(self):
+        self.head   = SkipNode(float('-inf'), self.MAX_LEVELS)
+        self.levels = 1                  # Current highest active level
+
+    def _random_level(self) -> int:
+        """Geometric distribution: each level added with probability P."""
+        level = 1
+        while random.random() < self.P and level < self.MAX_LEVELS:
+            level += 1
+        return level
+
+    def search(self, val) -> bool:
+        """Search for val. Expected O(log n)."""
+        curr = self.head
+        for i in range(self.levels - 1, -1, -1):
+            while curr.forward[i] and curr.forward[i].val < val:
+                curr = curr.forward[i]
+        curr = curr.forward[0]
+        return curr is not None and curr.val == val
+
+    def insert(self, val) -> None:
+        """Insert val. Expected O(log n)."""
+        update = [None] * self.MAX_LEVELS
+        curr   = self.head
+        # Find update[i] = rightmost node at each level before insertion point
+        for i in range(self.levels - 1, -1, -1):
+            while curr.forward[i] and curr.forward[i].val < val:
+                curr = curr.forward[i]
+            update[i] = curr
+
+        lvl = self._random_level()
+        if lvl > self.levels:           # New level: update[] with head
+            for i in range(self.levels, lvl):
+                update[i] = self.head
+            self.levels = lvl
+
+        node = SkipNode(val, lvl)
+        for i in range(lvl):
+            node.forward[i]     = update[i].forward[i]
+            update[i].forward[i] = node
+
+    def delete(self, val) -> bool:
+        """Remove val. Expected O(log n)."""
+        update = [None] * self.MAX_LEVELS
+        curr   = self.head
+        for i in range(self.levels - 1, -1, -1):
+            while curr.forward[i] and curr.forward[i].val < val:
+                curr = curr.forward[i]
+            update[i] = curr
+
+        target = curr.forward[0]
+        if target is None or target.val != val:
+            return False
+
+        for i in range(self.levels):
+            if update[i].forward[i] != target: break
+            update[i].forward[i] = target.forward[i]
+
+        while self.levels > 1 and self.head.forward[self.levels - 1] is None:
+            self.levels -= 1
+        return True
+
+    def to_list(self) -> list:
+        result, curr = [], self.head.forward[0]
+        while curr:
+            result.append(curr.val)
+            curr = curr.forward[0]
+        return result
+
+if __name__ == '__main__':
+    sl = SkipList()
+    for v in [5, 1, 9, 3, 7]:
+        sl.insert(v)
+    print(sl.to_list())      # [1, 3, 5, 7, 9]
+    print(sl.search(7))      # True
+    sl.delete(3)
+    print(sl.to_list())      # [1, 5, 7, 9]
+    print(sl.search(3))      # False

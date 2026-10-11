@@ -1,0 +1,2 @@
+package main
+type SegmentTree struct { tree []int; n int }

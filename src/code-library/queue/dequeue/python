@@ -1,0 +1,31 @@
+from collections import deque
+
+class Queue:
+    def __init__(self):
+        self._data = deque()
+
+    def enqueue(self, value) -> None:
+        self._data.append(value)       # O(1)
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        return self._data.popleft()    # O(1)
+
+    def peek(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        return self._data[0]           # front element
+
+    def is_empty(self) -> bool:
+        return len(self._data) == 0
+
+    def size(self) -> int:
+        return len(self._data)
+
+if __name__ == "__main__":
+    q = Queue()
+    q.enqueue(10); q.enqueue(20); q.enqueue(30)
+    print(q.peek())    # 10 (front)
+    print(q.dequeue()) # 10
+    print(q.size())    # 2

@@ -1,0 +1,7 @@
+#include <vector>
+class SegmentTree {
+    std::vector<int> tree;
+    int n;
+public:
+    SegmentTree(int n) : n(n), tree(4 * n, 0) {}
+};

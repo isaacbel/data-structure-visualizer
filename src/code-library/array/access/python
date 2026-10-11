@@ -1,0 +1,17 @@
+def access(arr: list, index: int):
+    """Random access by index. O(1)."""
+    if index < 0 or index >= len(arr):
+        raise IndexError(f"Index {index} out of range [0, {len(arr)-1}]")
+    return arr[index]
+
+def update(arr: list, index: int, value) -> None:
+    """Update element at index. O(1)."""
+    if index < 0 or index >= len(arr):
+        raise IndexError(f"Index {index} out of range")
+    arr[index] = value
+
+if __name__ == "__main__":
+    a = [10, 20, 30, 40]
+    print(access(a, 2))    # 30
+    update(a, 2, 99)
+    print(a)               # [10, 20, 99, 40]

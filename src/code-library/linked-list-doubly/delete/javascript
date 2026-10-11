@@ -1,0 +1,9 @@
+class DNode{constructor(val){this.val=val;this.prev=this.next=null;}}
+class DoublyLinkedList{
+    constructor(){this.head=this.tail=null;}
+    insertHead(v){const n=new DNode(v);n.next=this.head;if(this.head)this.head.prev=n;else this.tail=n;this.head=n;}
+    insertTail(v){const n=new DNode(v);n.prev=this.tail;if(this.tail)this.tail.next=n;else this.head=n;this.tail=n;}
+    delete(v){let c=this.head;while(c){if(c.val===v){if(c.prev)c.prev.next=c.next;else this.head=c.next;if(c.next)c.next.prev=c.prev;else this.tail=c.prev;return true;}c=c.next;}return false;}
+    search(v){let c=this.head;while(c){if(c.val===v)return true;c=c.next;}return false;}
+    traverse(){const r=[];let c=this.head;while(c){r.push(c.val);c=c.next;}return r;}
+}

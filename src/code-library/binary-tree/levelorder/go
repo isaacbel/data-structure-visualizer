@@ -1,0 +1,35 @@
+package main
+
+import "fmt"
+
+type Node struct {
+    Val   int
+    Left  *Node
+    Right *Node
+}
+
+type BST struct {
+    Root *Node
+}
+
+func (b *BST) Insert(val int) {
+    b.Root = insert(b.Root, val)
+}
+
+func insert(n *Node, val int) *Node {
+    if n == nil { return &Node{Val: val} }
+    if val < n.Val { n.Left = insert(n.Left, val) }
+    else if val > n.Val { n.Right = insert(n.Right, val) }
+    return n
+}
+
+func (b *BST) Search(val int) bool {
+    return search(b.Root, val)
+}
+
+func search(n *Node, val int) bool {
+    if n == nil { return false }
+    if n.Val == val { return true }
+    if val < n.Val { return search(n.Left, val) }
+    return search(n.Right, val)
+}

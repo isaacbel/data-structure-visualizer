@@ -1,0 +1,15 @@
+pub struct SuffixTree {
+    text: String,
+}
+
+impl SuffixTree {
+    pub fn build(text: &str) -> Self {
+        SuffixTree {
+            text: text.to_string(),
+        }
+    }
+
+    pub fn search(&self, pattern: &str) -> bool {
+        self.text.contains(pattern)
+    }
+}

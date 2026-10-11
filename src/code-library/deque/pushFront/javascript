@@ -1,0 +1,14 @@
+class Deque {
+    constructor(){ this._d=[]; this._h=0; }
+    pushFront(v){ this._d.unshift(v); }   // O(n) — use linked list for O(1)
+    pushBack(v) { this._d.push(v); }      // O(1)
+    popFront()  { return this._d.shift(); }  // O(n)
+    popBack()   { return this._d.pop(); }    // O(1)
+    peekFront() { return this._d[0]; }
+    peekBack()  { return this._d[this._d.length-1]; }
+    isEmpty()   { return this._d.length===0; }
+    size()      { return this._d.length; }
+}
+const dq = new Deque();
+dq.pushBack(10); dq.pushBack(20); dq.pushFront(5);
+console.log(dq.popFront(), dq.popBack());  // 5 20

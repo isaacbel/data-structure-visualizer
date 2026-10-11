@@ -1,0 +1,80 @@
+// ─── Hash Table with Separate Chaining ──────────────────────────────────────
+// Time:  Insert/Search/Delete O(1) average
+// Space: O(n)
+
+class HashTable {
+  constructor(capacity = 16) {
+    this.capacity = capacity;
+    this.size     = 0;
+    this.buckets  = Array.from({ length: capacity }, () => []);
+  }
+
+  /** Polynomial rolling hash for string/number keys. */
+  _hash(key) {
+    const str = String(key);
+    let h = 0;
+    for (let i = 0; i < str.length; i++) {
+      h = (h * 31 + str.charCodeAt(i)) % this.capacity;
+    }
+    return h;
+  }
+
+  /** Insert or update key-value pair. O(1) average. */
+  insert(key, value) {
+    const idx    = this._hash(key);
+    const bucket = this.buckets[idx];
+    const existing = bucket.find(([k]) => k === key);
+    if (existing) {
+      existing[1] = value;   // Update existing
+    } else {
+      bucket.push([key, value]);
+      this.size++;
+      if (this.size / this.capacity > 0.75) this._resize();
+    }
+  }
+
+  /** Return value for key, or undefined. O(1) average. */
+  search(key) {
+    const idx  = this._hash(key);
+    const pair = this.buckets[idx].find(([k]) => k === key);
+    return pair ? pair[1] : undefined;
+  }
+
+  /** Remove key. Returns true if found. O(1) average. */
+  delete(key) {
+    const idx    = this._hash(key);
+    const bucket = this.buckets[idx];
+    const i      = bucket.findIndex(([k]) => k === key);
+    if (i === -1) return false;
+    bucket.splice(i, 1);
+    this.size--;
+    return true;
+  }
+
+  /** Double capacity and rehash all entries. O(n). */
+  _resize() {
+    const old = this.buckets;
+    this.capacity *= 2;
+    this.buckets  = Array.from({ length: this.capacity }, () => []);
+    this.size     = 0;
+    for (const bucket of old) {
+      for (const [k, v] of bucket) this.insert(k, v);
+    }
+  }
+
+  entries() {
+    return this.buckets.flatMap(b => b);
+  }
+}
+
+// ─── Example ──────────────────────────────────────────────────────────────────
+const ht = new HashTable();
+ht.insert("name", "Alice");
+ht.insert("age",  30);
+ht.insert("city", "NYC");
+console.log(ht.search("name"));    // "Alice"
+console.log(ht.search("age"));     // 30
+console.log(ht.search("missing")); // undefined
+ht.delete("age");
+console.log(ht.search("age"));     // undefined
+console.log(ht.entries());

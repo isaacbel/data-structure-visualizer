@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>   // std::binary_search, std::lower_bound
+
+// ── Array Search: Linear & Binary Search ────────────────────────────────────
+// Time Complexity:  Linear O(n) | Binary O(log n)
+// Space Complexity: O(1)
+
+/**
+ * linearSearch — sequential scan, works on any array.
+ */
+int linearSearch(const std::vector<int>& arr, int target) {
+    for (int i = 0; i < static_cast<int>(arr.size()); i++) {
+        if (arr[i] == target) return i;
+    }
+    return -1;
+}
+
+/**
+ * binarySearch — requires sorted input.
+ * Iterative implementation: no stack overhead.
+ */
+int binarySearch(const std::vector<int>& arr, int target) {
+    int lo = 0, hi = static_cast<int>(arr.size()) - 1;
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;    // Prevents integer overflow
+        if (arr[mid] == target)    return mid;
+        else if (arr[mid] < target) lo = mid + 1;
+        else                        hi = mid - 1;
+    }
+    return -1;
+}
+
+/**
+ * Using STL: std::lower_bound returns iterator to first element >= target.
+ */
+int stlBinarySearch(const std::vector<int>& arr, int target) {
+    auto it = std::lower_bound(arr.begin(), arr.end(), target);
+    if (it != arr.end() && *it == target) {
+        return static_cast<int>(it - arr.begin());
+    }
+    return -1;
+}
+
+int main() {
+    std::vector<int> arr = {2, 5, 8, 12, 16, 23, 38, 56, 72, 91};
+
+    std::cout << "Linear  [23]: " << linearSearch(arr, 23) << "\n";    // 5
+    std::cout << "Binary  [23]: " << binarySearch(arr, 23) << "\n";    // 5
+    std::cout << "STL     [38]: " << stlBinarySearch(arr, 38) << "\n"; // 6
+    std::cout << "Missing [99]: " << binarySearch(arr, 99) << "\n";    // -1
+    return 0;
+}

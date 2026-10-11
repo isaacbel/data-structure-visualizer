@@ -1,0 +1,11 @@
+#include <stdio.h>
+void vec_delete(int data[], size_t *size, size_t index) {
+    for (size_t i = index; i < *size - 1; i++) data[i] = data[i+1];
+    (*size)--;
+}
+int main(void) {
+    int data[] = {10,20,30,40}; size_t size = 4;
+    vec_delete(data, &size, 2);
+    for (size_t i = 0; i < size; i++) printf("%d ", data[i]);  // 10 20 40
+    return 0;
+}

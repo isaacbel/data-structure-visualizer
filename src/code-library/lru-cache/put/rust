@@ -1,0 +1,23 @@
+use std::collections::HashMap;
+
+pub struct LRUCache {
+    capacity: usize,
+    map: HashMap<i32, i32>,
+}
+
+impl LRUCache {
+    pub fn new(capacity: usize) -> Self {
+        LRUCache {
+            capacity,
+            map: HashMap::new(),
+        }
+    }
+
+    pub fn get(&mut self, key: i32) -> i32 {
+        *self.map.get(&key).unwrap_or(&-1)
+    }
+
+    pub fn put(&mut self, key: i32, value: i32) {
+        self.map.insert(key, value);
+    }
+}

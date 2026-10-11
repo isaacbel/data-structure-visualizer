@@ -1,0 +1,16 @@
+public class CircularQueue {
+    private final int[] data;
+    private int head, tail, cap;
+    CircularQueue(int capacity) { cap=capacity+1; data=new int[cap]; }
+    boolean enqueue(int v){ if(full()) return false; data[tail]=v; tail=(tail+1)%cap; return true; }
+    int     dequeue()     { if(empty()) throw new java.util.NoSuchElementException(); int v=data[head]; head=(head+1)%cap; return v; }
+    int     peek()        { if(empty()) throw new java.util.NoSuchElementException(); return data[head]; }
+    boolean empty()       { return head==tail; }
+    boolean full()        { return (tail+1)%cap==head; }
+    int     size()        { return (tail-head+cap)%cap; }
+    public static void main(String[] a){
+        CircularQueue q = new CircularQueue(3);
+        q.enqueue(1); q.enqueue(2); q.enqueue(3);
+        System.out.println(q.peek()+" "+q.dequeue());  // 1 1
+    }
+}

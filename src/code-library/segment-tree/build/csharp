@@ -1,0 +1,4 @@
+public class SegmentTree {
+    int[] tree;
+    public SegmentTree(int n) { tree = new int[4 * n]; }
+}

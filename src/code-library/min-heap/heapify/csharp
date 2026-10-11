@@ -1,0 +1,6 @@
+using System.Collections.Generic;
+public class Heap {
+    PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+    public void Insert(int v) { pq.Enqueue(v, v); }
+    public int Extract() { return pq.Dequeue(); }
+}

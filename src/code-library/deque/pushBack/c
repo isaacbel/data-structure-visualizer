@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Node { int val; struct Node *prev, *next; } Node;
+typedef struct { Node *front, *back; int size; } Deque;
+void dq_init(Deque *d) { d->front=d->back=NULL; d->size=0; }
+void dq_push_front(Deque *d, int v){ Node *n=malloc(sizeof(Node)); n->val=v; n->prev=NULL; n->next=d->front; if(d->front) d->front->prev=n; else d->back=n; d->front=n; d->size++; }
+void dq_push_back (Deque *d, int v){ Node *n=malloc(sizeof(Node)); n->val=v; n->next=NULL; n->prev=d->back;  if(d->back)  d->back->next=n;  else d->front=n; d->back=n;  d->size++; }
+int  dq_pop_front(Deque *d){ Node *t=d->front; int v=t->val; d->front=t->next; if(d->front) d->front->prev=NULL; else d->back=NULL; free(t); d->size--; return v; }
+int  dq_pop_back (Deque *d){ Node *t=d->back;  int v=t->val; d->back=t->prev;  if(d->back)  d->back->next=NULL;  else d->front=NULL; free(t); d->size--; return v; }
+int main(void){ Deque d; dq_init(&d); dq_push_back(&d,10); dq_push_back(&d,20); dq_push_front(&d,5); printf("%d %d\n",dq_pop_front(&d),dq_pop_back(&d)); return 0; }

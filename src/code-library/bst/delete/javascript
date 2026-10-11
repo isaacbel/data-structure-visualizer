@@ -1,0 +1,48 @@
+class TreeNode {
+    constructor(val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BST {
+    constructor() { this.root = null; }
+
+    insert(val) {
+        const insertNode = (node, v) => {
+            if (!node) return new TreeNode(v);
+            if (v < node.val) node.left = insertNode(node.left, v);
+            else if (v > node.val) node.right = insertNode(node.right, v);
+            return node;
+        };
+        this.root = insertNode(this.root, val);
+    }
+
+    search(val) {
+        const searchNode = (node, v) => {
+            if (!node) return false;
+            if (node.val === v) return true;
+            return v < node.val ? searchNode(node.left, v) : searchNode(node.right, v);
+        };
+        return searchNode(this.root, val);
+    }
+
+    delete(val) {
+        const delNode = (node, v) => {
+            if (!node) return null;
+            if (v < node.val) node.left = delNode(node.left, v);
+            else if (v > node.val) node.right = delNode(node.right, v);
+            else {
+                if (!node.left) return node.right;
+                if (!node.right) return node.left;
+                let succ = node.right;
+                while (succ.left) succ = succ.left;
+                node.val = succ.val;
+                node.right = delNode(node.right, succ.val);
+            }
+            return node;
+        };
+        this.root = delNode(this.root, val);
+    }
+}

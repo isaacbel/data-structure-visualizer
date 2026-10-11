@@ -1,0 +1,10 @@
+#include <stdio.h>
+int main(void) {
+    int data[] = {10,20,30,40};
+    printf("%d
+", data[2]);   // O(1) -> 30
+    data[2] = 99;
+    printf("%d
+", data[2]);   // 99
+    return 0;
+}

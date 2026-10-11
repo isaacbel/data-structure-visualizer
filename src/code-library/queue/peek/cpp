@@ -1,0 +1,26 @@
+#include <queue>
+#include <iostream>
+#include <stdexcept>
+
+// STL queue:
+void demo_stl() {
+    std::queue<int> q;
+    q.push(10); q.push(20); q.push(30);
+    std::cout << "front=" << q.front() << "\n";  // 10
+    q.pop();
+    std::cout << "size=" << q.size() << "\n";    // 2
+}
+
+// Manual linked-list implementation:
+template<typename T>
+class Queue {
+    struct Node { T val; Node* next; };
+    Node *front_ = nullptr, *rear_ = nullptr;
+    int size_ = 0;
+public:
+    void enqueue(T v)  { auto* n=new Node{v,nullptr}; if(rear_) rear_->next=n; else front_=n; rear_=n; size_++; }
+    T    dequeue()     { if(!front_) throw std::underflow_error(""); auto* t=front_; T v=t->val; front_=front_->next; if(!front_) rear_=nullptr; delete t; size_--; return v; }
+    T    peek()        { if(!front_) throw std::underflow_error(""); return front_->val; }
+    bool empty()       { return size_==0; }
+    int  size()        { return size_; }
+};

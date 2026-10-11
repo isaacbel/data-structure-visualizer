@@ -1,0 +1,2 @@
+use std::collections::HashMap;
+struct TrieNode { children: HashMap<char, TrieNode>, is_end: bool }

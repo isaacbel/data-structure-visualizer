@@ -1,0 +1,4 @@
+v = [10,20,30,40]
+print(v[2])      # O(1) random access -> 30
+v[2] = 99
+print(v[2])      # 99

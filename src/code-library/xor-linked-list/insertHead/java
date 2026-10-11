@@ -1,0 +1,23 @@
+// Java has no raw pointer arithmetic — XOR LL is language-level impossible.
+// Conceptual equivalent using arrays (arena-based):
+public class XorLinkedList {
+    int[] vals  = new int[100];
+    int[] npx   = new int[100];  // XOR of indices (0 = null sentinel)
+    int head=0, tail=0, count=0;
+
+    int alloc(int v){ int id=++count; vals[id]=v; npx[id]=0; return id; }
+
+    void insertTail(int v){
+        int id=alloc(v); npx[id]=tail^0;
+        if(tail!=0) npx[tail]^=id;
+        tail=id; if(head==0) head=id;
+    }
+
+    void traverse(){
+        int cur=head, prev=0, next;
+        while(cur!=0){ System.out.print(vals[cur]+" "); next=npx[cur]^prev; prev=cur; cur=next; }
+        System.out.println();
+    }
+
+    public static void main(String[]a){ XorLinkedList l=new XorLinkedList(); l.insertTail(10); l.insertTail(20); l.insertTail(30); l.traverse(); }
+}

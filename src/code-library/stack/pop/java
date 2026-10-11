@@ -1,0 +1,23 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class StackDemo {
+    // Using Deque (preferred over java.util.Stack):
+    public static void main(String[] args) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.push(10); stack.push(20); stack.push(30);
+        System.out.println("peek=" + stack.peek());   // 30
+        System.out.println("pop="  + stack.pop());    // 30
+        System.out.println("size=" + stack.size());   // 2
+    }
+}
+
+// Generic manual implementation:
+class Stack<T> {
+    private final java.util.ArrayList<T> data = new java.util.ArrayList<>();
+    public void push(T v)   { data.add(v); }
+    public T    pop()       { if (data.isEmpty()) throw new java.util.NoSuchElementException(); return data.remove(data.size()-1); }
+    public T    peek()      { if (data.isEmpty()) throw new java.util.NoSuchElementException(); return data.get(data.size()-1); }
+    public boolean isEmpty(){ return data.isEmpty(); }
+    public int  size()      { return data.size(); }
+}

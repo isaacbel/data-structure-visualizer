@@ -1,0 +1,22 @@
+fn traverse(arr: &[i32]) {
+    for (i, &v) in arr.iter().enumerate() {
+        println!("arr[{}] = {}", i, v);
+    }
+}
+
+fn traverse_reverse(arr: &[i32]) {
+    for (i, &v) in arr.iter().enumerate().rev() {
+        println!("arr[{}] = {}", i, v);
+    }
+}
+
+fn main() {
+    let arr = vec![10, 20, 30, 40];
+    traverse(&arr);
+    println!("---");
+    traverse_reverse(&arr);
+
+    // Functional style:
+    let doubled: Vec<i32> = arr.iter().map(|&x| x * 2).collect();
+    println!("{:?}", doubled);  // [20, 40, 60, 80]
+}

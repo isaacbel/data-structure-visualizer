@@ -1,0 +1,12 @@
+package main
+import "fmt"
+func vecInsert(v []int, index, value int) []int {
+    v = append(v, 0)
+    copy(v[index+1:], v[index:])
+    v[index] = value
+    return v
+}
+func main() {
+    v := vecInsert([]int{10,20,30,40}, 2, 99)
+    fmt.Println(v)  // [10 20 99 30 40]
+}

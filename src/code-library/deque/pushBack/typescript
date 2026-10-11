@@ -1,0 +1,11 @@
+class Deque<T> {
+    private _d: T[] = [];
+    pushFront(v: T): void { this._d.unshift(v); }
+    pushBack(v: T):  void { this._d.push(v); }
+    popFront(): T         { if(!this._d.length) throw new Error("empty"); return this._d.shift()!; }
+    popBack(): T          { if(!this._d.length) throw new Error("empty"); return this._d.pop()!; }
+    peekFront(): T        { return this._d[0]; }
+    peekBack(): T         { return this._d[this._d.length-1]; }
+    isEmpty(): boolean    { return this._d.length===0; }
+    size(): number        { return this._d.length; }
+}

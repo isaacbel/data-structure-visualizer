@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+
+public class ArrayAccess {
+    public static T Access<T>(List<T> arr, int index) {
+        if (index < 0 || index >= arr.Count)
+            throw new ArgumentOutOfRangeException(nameof(index));
+        return arr[index];  // O(1)
+    }
+
+    public static void Update<T>(List<T> arr, int index, T value) {
+        if (index < 0 || index >= arr.Count)
+            throw new ArgumentOutOfRangeException(nameof(index));
+        arr[index] = value;  // O(1)
+    }
+
+    public static void Main() {
+        var arr = new List<int> { 10, 20, 30, 40 };
+        Console.WriteLine(Access(arr, 2));   // 30
+        Update(arr, 2, 99);
+        Console.WriteLine(arr[2]);           // 99
+    }
+}

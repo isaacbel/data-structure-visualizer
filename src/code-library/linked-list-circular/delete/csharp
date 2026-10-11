@@ -1,0 +1,7 @@
+public class CLL{
+    class N{public int V;public N?Next;public N(int v){V=v;}}
+    N?tail;
+    public void Insert(int v){var n=new N(v);if(tail==null){n.Next=n;tail=n;}else{n.Next=tail.Next;tail.Next=n;}}
+    public bool Search(int v){if(tail==null)return false;var c=tail.Next!;do{if(c.V==v)return true;c=c.Next!;}while(c!=tail.Next);return false;}
+    public System.Collections.Generic.List<int> Traverse(){var r=new System.Collections.Generic.List<int>();if(tail==null)return r;var c=tail.Next!;do{r.Add(c.V);c=c.Next!;}while(c!=tail.Next);return r;}
+}

@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class ArrayDelete {
+    public static <T> T delete(ArrayList<T> arr, int index) {
+        return arr.remove(index);  // O(n)
+    }
+
+    // Raw array version:
+    public static void deleteRaw(int[] arr, int[] nRef, int index) {
+        int n = nRef[0];
+        for (int i = index; i < n - 1; i++)
+            arr[i] = arr[i + 1];
+        nRef[0]--;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(10, 20, 30, 40));
+        delete(list, 2);
+        System.out.println(list);  // [10, 20, 40]
+    }
+}

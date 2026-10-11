@@ -1,0 +1,22 @@
+#include <vector>
+#include <iostream>
+
+void traverse(const std::vector<int>& arr) {
+    for (int i = 0; i < (int)arr.size(); i++)
+        std::cout << "arr[" << i << "] = " << arr[i] << "
+";
+}
+
+// Range-based for loop (idiomatic C++11):
+void traverse_range(const std::vector<int>& arr) {
+    for (const int& x : arr)
+        std::cout << x << " ";
+    std::cout << "
+";
+}
+
+int main() {
+    std::vector<int> arr = {10, 20, 30, 40};
+    traverse(arr);
+    traverse_range(arr);
+}

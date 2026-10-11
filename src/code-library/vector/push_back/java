@@ -1,0 +1,12 @@
+import java.util.ArrayList;
+
+public class VectorPushBack {
+    public static void main(String[] args) {
+        ArrayList<Integer> v = new ArrayList<>(4);  // initial capacity
+        v.add(10);  // push_back — O(1) amortized
+        v.add(20);
+        v.add(30);
+        System.out.println(v);  // [10, 20, 30]
+        System.out.println("size: " + v.size());
+    }
+}

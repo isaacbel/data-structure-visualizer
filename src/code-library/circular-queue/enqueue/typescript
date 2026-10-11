@@ -1,0 +1,12 @@
+class CircularQueue<T> {
+    private _data: (T|undefined)[];
+    private _head = 0; private _tail = 0;
+    private _cap: number;
+    constructor(capacity: number) { this._cap = capacity+1; this._data = new Array(this._cap); }
+    enqueue(v: T): boolean { if(this.isFull()) return false; this._data[this._tail]=v; this._tail=(this._tail+1)%this._cap; return true; }
+    dequeue(): T   { if(this.isEmpty()) throw new Error("empty"); const v=this._data[this._head] as T; this._head=(this._head+1)%this._cap; return v; }
+    peek(): T      { if(this.isEmpty()) throw new Error("empty"); return this._data[this._head] as T; }
+    isEmpty(): boolean { return this._head===this._tail; }
+    isFull():  boolean { return (this._tail+1)%this._cap===this._head; }
+    size(): number { return (this._tail-this._head+this._cap)%this._cap; }
+}

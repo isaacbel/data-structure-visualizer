@@ -1,0 +1,17 @@
+def array_delete(arr: list, index: int):
+    """Remove element at index. O(n) due to shift."""
+    if index < 0 or index >= len(arr):
+        raise IndexError("Index out of bounds")
+    return arr.pop(index)
+
+# Manual (no built-in):
+def array_delete_manual(arr: list, index: int) -> list:
+    for i in range(index, len(arr) - 1):
+        arr[i] = arr[i + 1]   # shift left
+    arr.pop()                  # shrink
+    return arr
+
+if __name__ == "__main__":
+    a = [10, 20, 30, 40]
+    array_delete(a, 2)
+    print(a)  # [10, 20, 40]

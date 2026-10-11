@@ -1,0 +1,9 @@
+class Node<T> { constructor(public val:T, public next:Node<T>|null=null){} }
+class SinglyLinkedList<T> {
+    head: Node<T>|null = null;
+    insertHead(val:T): void { this.head=new Node(val,this.head); }
+    insertTail(val:T): void { const n=new Node(val); if(!this.head){this.head=n;return;} let c=this.head; while(c.next) c=c.next; c.next=n; }
+    delete(val:T): boolean { if(!this.head) return false; if(this.head.val===val){this.head=this.head.next;return true;} let c=this.head; while(c.next){if(c.next.val===val){c.next=c.next.next;return true;}c=c.next;} return false; }
+    search(val:T): boolean { let c=this.head; while(c){if(c.val===val)return true;c=c.next;} return false; }
+    traverse(): T[] { const r:T[]=[]; let c=this.head; while(c){r.push(c.val);c=c.next;} return r; }
+}

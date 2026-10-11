@@ -1,0 +1,9 @@
+struct RopeNode{val:String,weight:usize,left:Option<Box<RopeNode>>,right:Option<Box<RopeNode>>}
+impl RopeNode{
+    fn leaf(s:&str)->Self{RopeNode{val:s.to_string(),weight:s.len(),left:None,right:None}}
+    fn concat(a:Box<RopeNode>,b:Box<RopeNode>)->Self{let w=a.weight;RopeNode{val:String::new(),weight:w,left:Some(a),right:Some(b)}}
+    fn index(&self,i:usize)->u8{if self.left.is_none(){return self.val.as_bytes()[i]};if i<self.weight{return self.left.as_ref().unwrap().index(i)};self.right.as_ref().unwrap().index(i-self.weight)}
+    fn collect(&self)->String{if self.left.is_none(){return self.val.clone()};self.left.as_ref().unwrap().collect()+&self.right.as_ref().unwrap().collect()}
+    fn split(self,i:usize)->(String,String){let s=self.collect();(s[..i].to_string(),s[i..].to_string())}
+}
+fn main(){let a=Box::new(RopeNode::leaf("Hello, "));let b=Box::new(RopeNode::leaf("World!"));let r=RopeNode::concat(a,b);println!("{}",r.collect());println!("{}",r.index(7) as char);}

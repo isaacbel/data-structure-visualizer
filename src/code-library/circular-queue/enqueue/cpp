@@ -1,0 +1,21 @@
+#include <vector>
+#include <stdexcept>
+#include <iostream>
+template<typename T>
+class CircularQueue {
+    std::vector<T> data;
+    int head=0, tail=0, cap;
+public:
+    CircularQueue(int c) : data(c+1), cap(c+1) {}
+    bool enqueue(T v) { if(full()) return false; data[tail]=v; tail=(tail+1)%cap; return true; }
+    T    dequeue()    { if(empty()) throw std::underflow_error(""); T v=data[head]; head=(head+1)%cap; return v; }
+    T    peek()       { if(empty()) throw std::underflow_error(""); return data[head]; }
+    bool empty()      { return head==tail; }
+    bool full()       { return (tail+1)%cap==head; }
+    int  size()       { return (tail-head+cap)%cap; }
+};
+int main(){
+    CircularQueue<int> q(3);
+    q.enqueue(1); q.enqueue(2); q.enqueue(3);
+    std::cout << q.peek() << " " << q.dequeue() << "\n";  // 1 1
+}

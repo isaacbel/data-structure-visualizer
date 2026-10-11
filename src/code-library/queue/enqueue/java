@@ -1,0 +1,21 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class QueueDemo {
+    public static void main(String[] args) {
+        Deque<Integer> q = new ArrayDeque<>();
+        q.offer(10); q.offer(20); q.offer(30);
+        System.out.println("peek="  + q.peek());   // 10
+        System.out.println("poll="  + q.poll());   // 10
+        System.out.println("size="  + q.size());   // 2
+    }
+}
+
+class Queue<T> {
+    private final java.util.LinkedList<T> data = new java.util.LinkedList<>();
+    public void enqueue(T v)    { data.addLast(v); }
+    public T    dequeue()       { return data.removeFirst(); }
+    public T    peek()          { return data.getFirst(); }
+    public boolean isEmpty()    { return data.isEmpty(); }
+    public int  size()          { return data.size(); }
+}

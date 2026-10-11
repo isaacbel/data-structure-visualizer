@@ -1,0 +1,62 @@
+import java.util.Arrays;
+
+/**
+ * Array Search: Linear Search & Binary Search
+ *
+ * Time Complexity:  Linear O(n) | Binary O(log n)
+ * Space Complexity: O(1) iterative | O(log n) recursive stack
+ */
+public class ArraySearch {
+
+    /**
+     * Linear search — finds first occurrence of target.
+     * Works on any array (sorted or unsorted).
+     *
+     * @param arr    array to search
+     * @param target value to find
+     * @return index of first match, or -1 if not found
+     */
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) return i;   // Found
+        }
+        return -1;                             // Not found
+    }
+
+    /**
+     * Binary search (iterative) — requires SORTED array.
+     * Eliminates half the search space each step → O(log n).
+     */
+    public static int binarySearch(int[] arr, int target) {
+        int lo = 0, hi = arr.length - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;     // Avoid integer overflow
+            if (arr[mid] == target)   return mid;
+            else if (arr[mid] < target) lo = mid + 1;
+            else                        hi = mid - 1;
+        }
+        return -1;
+    }
+
+    /**
+     * Binary search (recursive).
+     */
+    public static int binarySearchRec(int[] arr, int target, int lo, int hi) {
+        if (lo > hi) return -1;
+        int mid = lo + (hi - lo) / 2;
+        if (arr[mid] == target)    return mid;
+        if (arr[mid] < target)     return binarySearchRec(arr, target, mid + 1, hi);
+        return binarySearchRec(arr, target, lo, mid - 1);
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {2, 5, 8, 12, 16, 23, 38, 56, 72, 91};
+
+        System.out.println(linearSearch(arr, 23));        // 5
+        System.out.println(binarySearch(arr, 23));        // 5
+        System.out.println(binarySearch(arr, 99));        // -1
+
+        // Built-in binary search for comparison
+        System.out.println(Arrays.binarySearch(arr, 38)); // 6
+    }
+}

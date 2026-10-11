@@ -1,0 +1,12 @@
+package main
+import("container/list";"fmt")
+type Deque struct{ l *list.List }
+func NewDeque() *Deque { return &Deque{list.New()} }
+func (d *Deque) PushFront(v int) { d.l.PushFront(v) }
+func (d *Deque) PushBack(v int)  { d.l.PushBack(v) }
+func (d *Deque) PopFront() int   { e:=d.l.Front(); d.l.Remove(e); return e.Value.(int) }
+func (d *Deque) PopBack() int    { e:=d.l.Back();  d.l.Remove(e); return e.Value.(int) }
+func main(){
+    dq:=NewDeque(); dq.PushBack(10); dq.PushBack(20); dq.PushFront(5)
+    fmt.Println(dq.PopFront(), dq.PopBack())  // 5 20
+}

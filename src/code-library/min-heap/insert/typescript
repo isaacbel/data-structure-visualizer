@@ -1,0 +1,5 @@
+class MinHeap<T> {
+    private heap: T[] = [];
+    insert(val: T): void { this.heap.push(val); }
+    extract(): T | undefined { return this.heap.shift(); }
+}

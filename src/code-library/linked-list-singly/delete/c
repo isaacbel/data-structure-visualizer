@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Node { int val; struct Node *next; } Node;
+
+Node* node_new(int v)            { Node *n=malloc(sizeof(Node)); n->val=v; n->next=NULL; return n; }
+void  sll_insert_head(Node **h, int v){ Node *n=node_new(v); n->next=*h; *h=n; }
+void  sll_insert_tail(Node **h, int v){
+    Node *n=node_new(v);
+    if(!*h){ *h=n; return; }
+    Node *cur=*h; while(cur->next) cur=cur->next; cur->next=n;
+}
+int   sll_delete(Node **h, int v){
+    if(!*h) return 0;
+    if((*h)->val==v){ Node *t=*h; *h=(*h)->next; free(t); return 1; }
+    Node *cur=*h; while(cur->next){ if(cur->next->val==v){ Node *t=cur->next; cur->next=t->next; free(t); return 1; } cur=cur->next; } return 0;
+}
+int   sll_search(Node *h, int v) { while(h){ if(h->val==v) return 1; h=h->next; } return 0; }
+void  sll_traverse(Node *h)      { while(h){ printf("%d->",h->val); h=h->next; } printf("NULL\n"); }
+
+int main(void){
+    Node *head=NULL;
+    sll_insert_head(&head,30); sll_insert_head(&head,20); sll_insert_head(&head,10);
+    sll_insert_tail(&head,40);
+    sll_traverse(head);  // 10->20->30->40->NULL
+    sll_delete(&head,20);
+    sll_traverse(head);  // 10->30->40->NULL
+    printf("search 30: %d\n", sll_search(head,30));
+    return 0;
+}

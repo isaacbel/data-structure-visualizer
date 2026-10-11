@@ -1,0 +1,13 @@
+#include <vector>
+#include <iostream>
+
+// Insert value at index. O(n) due to shift.
+void array_insert(std::vector<int>& arr, int index, int value) {
+    arr.insert(arr.begin() + index, value);
+}
+
+int main() {
+    std::vector<int> arr = {10, 20, 30, 40};
+    array_insert(arr, 2, 99);
+    for (int x : arr) std::cout << x << " ";  // 10 20 99 30 40
+}

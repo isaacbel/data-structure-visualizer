@@ -1,0 +1,8 @@
+public class DoublyLinkedList<T> where T:System.IEquatable<T>{
+    class N{public T V;public N?P,Ne;public N(T v){V=v;}}
+    N?head,tail;
+    public void InsertHead(T v){var n=new N(v);n.Ne=head;if(head!=null)head.P=n;else tail=n;head=n;}
+    public void InsertTail(T v){var n=new N(v);n.P=tail;if(tail!=null)tail.Ne=n;else head=n;tail=n;}
+    public bool Delete(T v){var c=head;while(c!=null){if(c.V.Equals(v)){if(c.P!=null)c.P.Ne=c.Ne;else head=c.Ne;if(c.Ne!=null)c.Ne.P=c.P;else tail=c.P;return true;}c=c.Ne;}return false;}
+    public bool Search(T v){var c=head;while(c!=null){if(c.V.Equals(v))return true;c=c.Ne;}return false;}
+}

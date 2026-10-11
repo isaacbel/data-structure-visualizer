@@ -1,0 +1,12 @@
+using System;
+using System.Collections.Generic;
+
+public class QueueDemo {
+    public static void Main() {
+        var q = new Queue<int>();
+        q.Enqueue(10); q.Enqueue(20); q.Enqueue(30);
+        Console.WriteLine("peek=" + q.Peek());    // 10
+        Console.WriteLine("deq="  + q.Dequeue()); // 10
+        Console.WriteLine("size=" + q.Count);     // 2
+    }
+}

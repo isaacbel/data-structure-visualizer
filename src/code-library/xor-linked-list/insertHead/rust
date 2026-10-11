@@ -1,0 +1,14 @@
+// Rust XOR LL using index-based arena (safe alternative to raw pointers):
+pub struct XorLL { vals: Vec<i32>, npx: Vec<usize>, head: usize, tail: usize, count: usize }
+impl XorLL {
+    pub fn new() -> Self { XorLL { vals: vec![0], npx: vec![0], head:0, tail:0, count:0 } }
+    fn alloc(&mut self, v: i32) -> usize { self.count+=1; self.vals.push(v); self.npx.push(0); self.count }
+    pub fn insert_tail(&mut self, v: i32) { let id=self.alloc(v); self.npx[id]=self.tail^0; if self.tail!=0 { self.npx[self.tail]^=id; } self.tail=id; if self.head==0 { self.head=id; } }
+    pub fn insert_head(&mut self, v: i32) { let id=self.alloc(v); self.npx[id]=0^self.head; if self.head!=0 { self.npx[self.head]^=id; } self.head=id; if self.tail==0 { self.tail=id; } }
+    pub fn delete(&mut self, v: i32) -> bool {
+        let (mut cur, mut prev) = (self.head, 0usize);
+        while cur != 0 { if self.vals[cur]==v { let next=self.npx[cur]^prev; if prev!=0{self.npx[prev]=self.npx[prev]^cur^next}else{self.head=next}; if next!=0{self.npx[next]=self.npx[next]^cur^prev}else{self.tail=prev}; return true; } let next=self.npx[cur]^prev; prev=cur; cur=next; } false
+    }
+    pub fn traverse(&self) -> Vec<i32> { let (mut r,mut cur,mut prev)=(vec![],self.head,0usize); while cur!=0{r.push(self.vals[cur]);let next=self.npx[cur]^prev;prev=cur;cur=next;}r }
+}
+fn main(){ let mut x=XorLL::new(); x.insert_tail(10); x.insert_tail(20); x.insert_tail(30); println!("{:?}",x.traverse()); }

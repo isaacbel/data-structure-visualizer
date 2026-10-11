@@ -1,0 +1,26 @@
+class Queue {
+    constructor() {
+        this._data = [];
+        this._head = 0;  // avoid O(n) shift on dequeue
+    }
+    enqueue(value)  { this._data.push(value); }
+    dequeue() {
+        if (this.isEmpty()) throw new Error("Queue is empty");
+        const val = this._data[this._head++];
+        // Shrink internal array when head is far ahead
+        if (this._head > 100 && this._head > this._data.length / 2) {
+            this._data = this._data.slice(this._head);
+            this._head = 0;
+        }
+        return val;
+    }
+    peek()    { if (this.isEmpty()) throw new Error("empty"); return this._data[this._head]; }
+    isEmpty() { return this._head >= this._data.length; }
+    size()    { return this._data.length - this._head; }
+}
+
+const q = new Queue();
+q.enqueue(10); q.enqueue(20); q.enqueue(30);
+console.log(q.peek());    // 10
+console.log(q.dequeue()); // 10
+console.log(q.size());    // 2

@@ -1,0 +1,22 @@
+package main
+
+import (
+    "container/list"
+    "fmt"
+)
+
+type Stack struct { l *list.List }
+func NewStack()           *Stack { return &Stack{l: list.New()} }
+func (s *Stack) Push(v int)      { s.l.PushBack(v) }
+func (s *Stack) Pop() int        { e := s.l.Back(); s.l.Remove(e); return e.Value.(int) }
+func (s *Stack) Peek() int       { return s.l.Back().Value.(int) }
+func (s *Stack) IsEmpty() bool   { return s.l.Len() == 0 }
+func (s *Stack) Size() int       { return s.l.Len() }
+
+func main() {
+    s := NewStack()
+    s.Push(10); s.Push(20); s.Push(30)
+    fmt.Println("peek=", s.Peek())  // 30
+    fmt.Println("pop=",  s.Pop())   // 30
+    fmt.Println("size=", s.Size())  // 2
+}

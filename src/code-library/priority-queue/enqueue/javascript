@@ -1,0 +1,20 @@
+class PriorityQueue {
+    constructor(){ this._heap=[]; }
+    enqueue(value, priority){
+        this._heap.push({value,priority});
+        this._siftUp(this._heap.length-1);
+    }
+    dequeue(){
+        const top=this._heap[0];
+        const last=this._heap.pop();
+        if(this._heap.length>0){ this._heap[0]=last; this._siftDown(0); }
+        return top.value;
+    }
+    peek(){ return this._heap[0].value; }
+    isEmpty(){ return this._heap.length===0; }
+    _siftUp(i){ while(i>0){ const p=(i-1)>>1; if(this._heap[p].priority<=this._heap[i].priority) break; [this._heap[p],this._heap[i]]=[this._heap[i],this._heap[p]]; i=p; } }
+    _siftDown(i){ const n=this._heap.length; for(;;){ let s=i,l=2*i+1,r=2*i+2; if(l<n&&this._heap[l].priority<this._heap[s].priority) s=l; if(r<n&&this._heap[r].priority<this._heap[s].priority) s=r; if(s===i) break; [this._heap[s],this._heap[i]]=[this._heap[i],this._heap[s]]; i=s; } }
+}
+const pq=new PriorityQueue();
+pq.enqueue("A",3); pq.enqueue("B",1); pq.enqueue("C",2);
+console.log(pq.dequeue());  // B

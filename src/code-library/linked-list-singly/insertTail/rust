@@ -1,0 +1,31 @@
+struct Node<T> { val: T, next: Option<Box<Node<T>>> }
+struct SinglyLinkedList<T> { head: Option<Box<Node<T>>> }
+impl<T: PartialEq + Clone + std::fmt::Debug> SinglyLinkedList<T> {
+    fn new() -> Self { SinglyLinkedList { head: None } }
+    fn insert_head(&mut self, v: T) {
+        let n = Box::new(Node { val: v, next: self.head.take() });
+        self.head = Some(n);
+    }
+    fn insert_tail(&mut self, v: T) {
+        let n = Box::new(Node { val: v, next: None });
+        let mut cur = &mut self.head;
+        while let Some(ref mut node) = cur { cur = &mut node.next; }
+        *cur = Some(n);
+    }
+    fn search(&self, v: T) -> bool {
+        let mut cur = &self.head;
+        while let Some(ref node) = cur { if node.val == v { return true; } cur = &node.next; }
+        false
+    }
+    fn traverse(&self) -> Vec<T> {
+        let mut r = Vec::new();
+        let mut cur = &self.head;
+        while let Some(ref node) = cur { r.push(node.val.clone()); cur = &node.next; }
+        r
+    }
+}
+fn main() {
+    let mut ll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    ll.insert_head(30); ll.insert_head(20); ll.insert_head(10); ll.insert_tail(40);
+    println!("{:?}", ll.traverse());  // [10, 20, 30, 40]
+}

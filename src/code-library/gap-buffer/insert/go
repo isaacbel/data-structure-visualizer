@@ -1,0 +1,9 @@
+package main
+import"fmt"
+type GapBuffer struct{buf[]byte;gs,ge int}
+func NewGB(s string,gapSize int)*GapBuffer{n:=len(s);b:=make([]byte,n+gapSize);copy(b,s);return&GapBuffer{buf:b,gs:n,ge:n+gapSize}}
+func(g*GapBuffer)Insert(c byte){g.buf[g.gs]=c;g.gs++}
+func(g*GapBuffer)Delete()byte{if g.gs==0{return 0};g.gs--;c:=g.buf[g.gs];g.buf[g.gs]=0;return c}
+func(g*GapBuffer)MoveGap(pos int){for g.gs>pos{g.ge--;g.gs--;g.buf[g.ge]=g.buf[g.gs];g.buf[g.gs]=0};for g.gs<pos{g.buf[g.gs]=g.buf[g.ge];g.buf[g.ge]=0;g.gs++;g.ge++}}
+func(g*GapBuffer)Content()string{var r[]byte;for _,c:=range g.buf{if c!=0{r=append(r,c)}};return string(r)}
+func main(){g:=NewGB("hello world",8);g.MoveGap(5);g.Insert(',');fmt.Println(g.Content())}

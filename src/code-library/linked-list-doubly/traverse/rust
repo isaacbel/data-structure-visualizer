@@ -1,0 +1,11 @@
+struct DNode<T>{val:T,prev:usize,next:usize}  // arena-based for simplicity
+// In Rust, doubly linked lists are complex due to ownership; using std LinkedList:
+use std::collections::LinkedList;
+fn main(){
+    let mut dll:LinkedList<i32>=LinkedList::new();
+    dll.push_front(20); dll.push_front(10); dll.push_back(30);
+    println!("{:?}",dll.iter().collect::<Vec<_>>());  // [10,20,30]
+    // Manual deletion: collect, filter, rebuild
+    let v:Vec<i32>=dll.into_iter().filter(|&x|x!=20).collect();
+    println!("{:?}",v);  // [10,30]
+}

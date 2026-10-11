@@ -1,0 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct { int priority; int value; } Item;
+typedef struct { Item *data; int size, cap; } PQ;
+void pq_init(PQ *pq)          { pq->cap=8; pq->size=0; pq->data=malloc(pq->cap*sizeof(Item)); }
+void sift_up(PQ *pq, int i)   { while(i>0){ int p=(i-1)/2; if(pq->data[p].priority<=pq->data[i].priority) break; Item t=pq->data[p]; pq->data[p]=pq->data[i]; pq->data[i]=t; i=p; } }
+void sift_dn(PQ *pq, int i)   { int n=pq->size; for(;;){ int l=2*i+1,r=2*i+2,s=i; if(l<n&&pq->data[l].priority<pq->data[s].priority) s=l; if(r<n&&pq->data[r].priority<pq->data[s].priority) s=r; if(s==i) break; Item t=pq->data[i]; pq->data[i]=pq->data[s]; pq->data[s]=t; i=s; } }
+void pq_push(PQ *pq, int v, int p){ if(pq->size==pq->cap){ pq->cap*=2; pq->data=realloc(pq->data,pq->cap*sizeof(Item)); } pq->data[pq->size++]=(Item){p,v}; sift_up(pq,pq->size-1); }
+Item pq_pop(PQ *pq)           { Item top=pq->data[0]; pq->data[0]=pq->data[--pq->size]; sift_dn(pq,0); return top; }
+Item pq_peek(PQ *pq)          { return pq->data[0]; }
+int main(void){ PQ pq; pq_init(&pq); pq_push(&pq,10,3); pq_push(&pq,20,1); pq_push(&pq,30,2); printf("min-pri val=%d\n",pq_pop(&pq).value); return 0; }

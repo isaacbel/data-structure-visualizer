@@ -1,0 +1,6 @@
+using System;
+using System.Collections.Generic;
+// C# built-in PriorityQueue<TElement, TPriority> (.NET 6+)
+var pq = new PriorityQueue<string, int>();
+pq.Enqueue("A", 3); pq.Enqueue("B", 1); pq.Enqueue("C", 2);
+Console.WriteLine(pq.Dequeue());  // B (lowest priority number first)

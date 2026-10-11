@@ -1,0 +1,59 @@
+# ─── Array Search: Linear Search & Binary Search ────────────────────────────
+# Time Complexity:  Linear Search O(n) | Binary Search O(log n)
+# Space Complexity: O(1)
+
+def linear_search(arr: list, target) -> int:
+    """
+    Search for target in arr using linear scan.
+    Returns index of first occurrence, or -1 if not found.
+    Works on unsorted arrays.
+    """
+    for i, val in enumerate(arr):       # Scan every element
+        if val == target:
+            return i                    # Found: return index immediately
+    return -1                           # Not found
+
+def binary_search(arr: list, target) -> int:
+    """
+    Search for target in a SORTED array using binary search.
+    Returns index of target, or -1 if not found.
+    Requires arr to be sorted in ascending order.
+    Time: O(log n) — eliminates half the search space each step.
+    """
+    lo, hi = 0, len(arr) - 1
+    while lo <= hi:
+        mid = lo + (hi - lo) // 2      # Avoid integer overflow
+        if arr[mid] == target:
+            return mid                  # Exact match
+        elif arr[mid] < target:
+            lo = mid + 1               # Target is in right half
+        else:
+            hi = mid - 1              # Target is in left half
+    return -1                           # Not found
+
+def binary_search_recursive(arr: list, target, lo: int, hi: int) -> int:
+    """Recursive binary search."""
+    if lo > hi:
+        return -1
+    mid = lo + (hi - lo) // 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return binary_search_recursive(arr, target, mid + 1, hi)
+    else:
+        return binary_search_recursive(arr, target, lo, mid - 1)
+
+# ─── Example usage ───────────────────────────────────────────────────────────
+if __name__ == '__main__':
+    data = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
+
+    # Linear search (works on unsorted)
+    idx = linear_search(data, 23)
+    print(f"Linear search  → index {idx}")    # → 5
+
+    # Binary search (requires sorted)
+    idx = binary_search(data, 23)
+    print(f"Binary search  → index {idx}")    # → 5
+
+    idx = binary_search(data, 99)
+    print(f"Not found      → index {idx}")    # → -1

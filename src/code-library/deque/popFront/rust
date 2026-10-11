@@ -1,0 +1,8 @@
+use std::collections::VecDeque;
+fn main(){
+    let mut dq: VecDeque<i32> = VecDeque::new();
+    dq.push_back(10); dq.push_back(20); dq.push_front(5);
+    println!("{:?} {:?}", dq.front(), dq.back()); // Some(5) Some(20)
+    dq.pop_front(); dq.pop_back();
+    println!("{}", dq.len());  // 1
+}

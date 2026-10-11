@@ -1,0 +1,17 @@
+package main
+
+import "fmt"
+
+// Insert value at index. Returns new slice. O(n).
+func arrayInsert(arr []int, index, value int) []int {
+    arr = append(arr, 0)                    // grow
+    copy(arr[index+1:], arr[index:])        // shift right
+    arr[index] = value
+    return arr
+}
+
+func main() {
+    arr := []int{10, 20, 30, 40}
+    arr = arrayInsert(arr, 2, 99)
+    fmt.Println(arr)  // [10 20 99 30 40]
+}

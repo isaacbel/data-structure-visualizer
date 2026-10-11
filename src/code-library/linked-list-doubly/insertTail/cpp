@@ -1,0 +1,12 @@
+#include<iostream>
+template<typename T> class DLL{
+    struct N{T v;N*p=nullptr,*n=nullptr;N(T x):v(x){}};
+    N*head=nullptr,*tail=nullptr;int sz=0;
+public:
+    void insertHead(T v){N*n=new N(v);n->n=head;if(head)head->p=n;else tail=n;head=n;sz++;}
+    void insertTail(T v){N*n=new N(v);n->p=tail;if(tail)tail->n=n;else head=n;tail=n;sz++;}
+    bool del(T v){N*c=head;while(c){if(c->v==v){if(c->p)c->p->n=c->n;else head=c->n;if(c->n)c->n->p=c->p;else tail=c->p;delete c;sz--;return true;}c=c->n;}return false;}
+    bool search(T v){N*c=head;while(c){if(c->v==v)return true;c=c->n;}return false;}
+    void traverse(){N*c=head;while(c){std::cout<<c->v<<"<->";c=c->n;}std::cout<<"null\n";}
+};
+int main(){DLL<int>dll;dll.insertHead(20);dll.insertHead(10);dll.insertTail(30);dll.traverse();dll.del(20);dll.traverse();}

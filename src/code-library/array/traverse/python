@@ -1,0 +1,15 @@
+def traverse(arr: list) -> None:
+    """Visit every element. O(n)."""
+    for i, value in enumerate(arr):
+        print(f"arr[{i}] = {value}")
+
+def traverse_reverse(arr: list) -> None:
+    """Traverse in reverse. O(n)."""
+    for i in range(len(arr) - 1, -1, -1):
+        print(f"arr[{i}] = {arr[i]}")
+
+if __name__ == "__main__":
+    a = [10, 20, 30, 40]
+    traverse(a)
+    print("---")
+    traverse_reverse(a)

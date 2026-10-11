@@ -1,0 +1,20 @@
+fn access(arr: &[i32], index: usize) -> Option<i32> {
+    arr.get(index).copied()  // O(1), returns None if out of range
+}
+
+fn update(arr: &mut [i32], index: usize, value: i32) -> bool {
+    if let Some(elem) = arr.get_mut(index) {
+        *elem = value;  // O(1)
+        true
+    } else {
+        false
+    }
+}
+
+fn main() {
+    let mut arr = vec![10, 20, 30, 40];
+    println!("{:?}", access(&arr, 2));  // Some(30)
+    println!("{:?}", access(&arr, 9));  // None
+    update(&mut arr, 2, 99);
+    println!("{:?}", arr);              // [10, 20, 99, 40]
+}

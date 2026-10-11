@@ -1,0 +1,7 @@
+// JavaScript arrays are dynamic by default — push is O(1) amortized.
+const v = [];
+v.push(10);  // push_back
+v.push(20);
+v.push(30);
+console.log(v);        // [10, 20, 30]
+console.log(v.length); // 3

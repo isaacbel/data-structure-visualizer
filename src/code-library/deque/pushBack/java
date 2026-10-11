@@ -1,0 +1,10 @@
+import java.util.ArrayDeque;
+public class DequeDemo{
+    public static void main(String[] a){
+        ArrayDeque<Integer> dq = new ArrayDeque<>();
+        dq.offerLast(10); dq.offerLast(20); dq.offerFirst(5);
+        System.out.println(dq.peekFirst()+" "+dq.peekLast()); // 5 20
+        dq.pollFirst(); dq.pollLast();
+        System.out.println(dq.size());  // 1
+    }
+}

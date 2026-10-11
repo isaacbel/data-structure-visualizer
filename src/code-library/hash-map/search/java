@@ -1,0 +1,9 @@
+import java.util.HashMap;
+
+public class HashTableDemo {
+    public static void main(String[] args) {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("apple", 1);
+        System.out.println(map.get("apple"));
+    }
+}

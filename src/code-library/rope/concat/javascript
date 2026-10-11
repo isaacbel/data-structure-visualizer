@@ -1,0 +1,11 @@
+class RopeNode{constructor(val='',left=null,right=null){this.val=val;this.left=left;this.right=right;this.weight=left?left.weight:val.length;}}
+class Rope{
+    constructor(s=''){this.root=new RopeNode(s);}
+    index(i){return this._idx(this.root,i);}
+    _idx(n,i){if(!n.left)return n.val[i];if(i<n.weight)return this._idx(n.left,i);return this._idx(n.right,i-n.weight);}
+    concat(other){const r=new Rope();r.root=new RopeNode('',this.root,other.root);return r;}
+    split(i){const s=this.toString();return[new Rope(s.slice(0,i)),new Rope(s.slice(i))];}
+    toString(){return this._collect(this.root);}
+    _collect(n){if(!n)return'';if(!n.left)return n.val;return this._collect(n.left)+this._collect(n.right);}
+}
+const r=new Rope('Hello, ').concat(new Rope('World!'));console.log(r.toString(),r.index(7));

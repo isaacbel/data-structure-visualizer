@@ -1,0 +1,30 @@
+class HashTable:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+
+    def _hash(self, key):
+        return hash(key) % self.size
+
+    def insert(self, key, value):
+        idx = self._hash(key)
+        for item in self.table[idx]:
+            if item[0] == key:
+                item[1] = value
+                return
+        self.table[idx].append([key, value])
+
+    def search(self, key):
+        idx = self._hash(key)
+        for item in self.table[idx]:
+            if item[0] == key:
+                return item[1]
+        return None
+
+    def delete(self, key):
+        idx = self._hash(key)
+        for i, item in enumerate(self.table[idx]):
+            if item[0] == key:
+                del self.table[idx][i]
+                return True
+        return False

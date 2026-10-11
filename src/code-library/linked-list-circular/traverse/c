@@ -1,0 +1,8 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct N{int v;struct N*next;}N;
+typedef struct{N*tail;int sz;}CLL;
+void cll_insert(CLL*c,int v){N*n=malloc(sizeof(N));n->v=v;if(!c->tail){n->next=n;c->tail=n;}else{n->next=c->tail->next;c->tail->next=n;}c->sz++;}
+void cll_traverse(CLL*c){if(!c->tail)return;N*cur=c->tail->next;do{printf("%d->",cur->v);cur=cur->next;}while(cur!=c->tail->next);printf("(head)\n");}
+int cll_search(CLL*c,int v){if(!c->tail)return 0;N*cur=c->tail->next;do{if(cur->v==v)return 1;cur=cur->next;}while(cur!=c->tail->next);return 0;}
+int main(void){CLL c={NULL,0};cll_insert(&c,3);cll_insert(&c,2);cll_insert(&c,1);cll_traverse(&c);printf("search 2: %d\n",cll_search(&c,2));return 0;}

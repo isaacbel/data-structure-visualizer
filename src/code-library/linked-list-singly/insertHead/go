@@ -1,0 +1,19 @@
+package main
+import "fmt"
+type SLLNode struct { Val int; Next *SLLNode }
+func sllInsertHead(head **SLLNode, v int) { *head=&SLLNode{Val:v,Next:*head} }
+func sllInsertTail(head **SLLNode, v int) {
+    n:=&SLLNode{Val:v}; if *head==nil{*head=n;return}
+    c:=*head; for c.Next!=nil{c=c.Next}; c.Next=n
+}
+func sllDelete(head **SLLNode, v int) bool {
+    if *head==nil{return false}; if (*head).Val==v{*head=(*head).Next;return true}
+    c:=*head; for c.Next!=nil{if c.Next.Val==v{c.Next=c.Next.Next;return true};c=c.Next}; return false
+}
+func sllSearch(head *SLLNode, v int) bool { for head!=nil{if head.Val==v{return true};head=head.Next}; return false }
+func sllTraverse(head *SLLNode) { for head!=nil{fmt.Print(head.Val,"->"); head=head.Next}; fmt.Println("nil") }
+func main(){
+    var head *SLLNode
+    sllInsertHead(&head,30); sllInsertHead(&head,20); sllInsertHead(&head,10); sllInsertTail(&head,40)
+    sllTraverse(head); sllDelete(&head,20); sllTraverse(head)
+}

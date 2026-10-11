@@ -1,0 +1,28 @@
+import heapq
+class PriorityQueue:
+    """Min-priority queue using a binary heap."""
+    def __init__(self):
+        self._heap = []
+        self._counter = 0   # tiebreaker
+
+    def enqueue(self, value, priority: int) -> None:
+        heapq.heappush(self._heap, (priority, self._counter, value))
+        self._counter += 1
+
+    def dequeue(self):
+        if self.is_empty(): raise IndexError("Empty")
+        _, _, value = heapq.heappop(self._heap)
+        return value
+
+    def peek(self):
+        if self.is_empty(): raise IndexError("Empty")
+        return self._heap[0][2]
+
+    def is_empty(self) -> bool: return len(self._heap) == 0
+    def size(self)     -> int:  return len(self._heap)
+
+pq = PriorityQueue()
+pq.enqueue("task_A", 3)
+pq.enqueue("task_B", 1)
+pq.enqueue("task_C", 2)
+print(pq.dequeue())  # task_B (priority 1 = highest)

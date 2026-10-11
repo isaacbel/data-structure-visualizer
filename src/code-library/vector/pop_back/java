@@ -1,0 +1,15 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class VectorPopBack {
+    public static <T> T popBack(ArrayList<T> v) {
+        if (v.isEmpty()) throw new java.util.NoSuchElementException("pop on empty");
+        return v.remove(v.size() - 1);  // O(1)
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Integer> v = new ArrayList<>(Arrays.asList(10, 20, 30));
+        System.out.println(popBack(v));  // 30
+        System.out.println(v);          // [10, 20]
+    }
+}

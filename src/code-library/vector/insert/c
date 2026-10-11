@@ -1,0 +1,11 @@
+#include <stdio.h>
+void vec_insert(int data[], size_t *size, size_t index, int value) {
+    for (size_t i = *size; i > index; i--) data[i] = data[i-1];
+    data[index] = value; (*size)++;
+}
+int main(void) {
+    int data[10] = {10,20,30,40}; size_t size = 4;
+    vec_insert(data, &size, 2, 99);
+    for (size_t i = 0; i < size; i++) printf("%d ", data[i]);
+    return 0;
+}

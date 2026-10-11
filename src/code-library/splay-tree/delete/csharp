@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+
+public class BST {
+    public class Node {
+        public int Val;
+        public Node Left, Right;
+        public Node(int v) { Val = v; }
+    }
+
+    public Node Root;
+
+    public void Insert(int val) { Root = Insert(Root, val); }
+    private Node Insert(Node n, int v) {
+        if (n == null) return new Node(v);
+        if (v < n.Val) n.Left = Insert(n.Left, v);
+        else if (v > n.Val) n.Right = Insert(n.Right, v);
+        return n;
+    }
+
+    public bool Search(int val) { return Search(Root, val); }
+    private bool Search(Node n, int v) {
+        if (n == null) return false;
+        if (n.Val == v) return true;
+        return v < n.Val ? Search(n.Left, v) : Search(n.Right, v);
+    }
+}

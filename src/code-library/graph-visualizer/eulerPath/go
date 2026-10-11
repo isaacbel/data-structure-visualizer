@@ -1,0 +1,3 @@
+package main
+type Edge struct { to, weight int }
+type Graph struct { V int; adj [][]Edge }

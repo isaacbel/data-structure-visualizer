@@ -1,0 +1,8 @@
+public class CircularLinkedList{
+    static class N{int v;N next;N(int x){v=x;}}
+    N tail;
+    void insert(int v){N n=new N(v);if(tail==null){n.next=n;tail=n;}else{n.next=tail.next;tail.next=n;}};
+    boolean search(int v){if(tail==null)return false;N c=tail.next;do{if(c.v==v)return true;c=c.next;}while(c!=tail.next);return false;}
+    void traverse(){if(tail==null)return;N c=tail.next;do{System.out.print(c.v+"->");c=c.next;}while(c!=tail.next);System.out.println("(head)");}
+    public static void main(String[]a){CircularLinkedList c=new CircularLinkedList();c.insert(3);c.insert(2);c.insert(1);c.traverse();}
+}

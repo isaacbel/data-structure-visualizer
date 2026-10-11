@@ -1,0 +1,9 @@
+package main
+import "fmt"
+func vecDelete(v []int, index int) []int {
+    return append(v[:index], v[index+1:]...)
+}
+func main() {
+    v := vecDelete([]int{10,20,30,40}, 2)
+    fmt.Println(v)  // [10 20 40]
+}

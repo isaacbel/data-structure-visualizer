@@ -1,0 +1,9 @@
+package main
+import "fmt"
+type DN struct{Val int;Prev,Next*DN}
+type DLL struct{Head,Tail*DN}
+func(d*DLL)InsertHead(v int){n:=&DN{Val:v,Next:d.Head};if d.Head!=nil{d.Head.Prev=n}else{d.Tail=n};d.Head=n}
+func(d*DLL)InsertTail(v int){n:=&DN{Val:v,Prev:d.Tail};if d.Tail!=nil{d.Tail.Next=n}else{d.Head=n};d.Tail=n}
+func(d*DLL)Delete(v int)bool{c:=d.Head;for c!=nil{if c.Val==v{if c.Prev!=nil{c.Prev.Next=c.Next}else{d.Head=c.Next};if c.Next!=nil{c.Next.Prev=c.Prev}else{d.Tail=c.Prev};return true};c=c.Next};return false}
+func(d*DLL)Traverse(){c:=d.Head;for c!=nil{fmt.Print(c.Val,"<->");c=c.Next};fmt.Println("nil")}
+func main(){d:=&DLL{};d.InsertHead(20);d.InsertHead(10);d.InsertTail(30);d.Traverse();d.Delete(20);d.Traverse()}

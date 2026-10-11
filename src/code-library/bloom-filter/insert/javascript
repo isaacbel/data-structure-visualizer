@@ -1,0 +1,6 @@
+class HashTable {
+    constructor(size = 10) { this.table = new Array(size); }
+    insert(key, value) { }
+    search(key) { }
+    delete(key) { }
+}

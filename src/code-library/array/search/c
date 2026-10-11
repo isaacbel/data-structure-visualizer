@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+/* ── Array Search: Linear & Binary ──────────────────────────────────────────
+ * Time Complexity:  Linear O(n) | Binary O(log n)
+ * Space Complexity: O(1)
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * linear_search — scan every element.
+ * Works on unsorted arrays.
+ * Returns first matching index or -1.
+ */
+int linear_search(int arr[], int n, int target) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == target) return i;
+    }
+    return -1;
+}
+
+/**
+ * binary_search — requires sorted array in ascending order.
+ * Divides search space in half each iteration.
+ * Returns matching index or -1.
+ */
+int binary_search(int arr[], int n, int target) {
+    int lo = 0, hi = n - 1;
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;   /* Prevent (lo+hi) overflow */
+        if (arr[mid] == target) return mid;
+        else if (arr[mid] < target) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return -1;
+}
+
+/**
+ * binary_search_recursive — recursive variant.
+ */
+int binary_search_rec(int arr[], int lo, int hi, int target) {
+    if (lo > hi) return -1;
+    int mid = lo + (hi - lo) / 2;
+    if (arr[mid] == target)   return mid;
+    if (arr[mid] < target)    return binary_search_rec(arr, mid + 1, hi, target);
+    return binary_search_rec(arr, lo, mid - 1, target);
+}
+
+int main() {
+    int arr[] = {2, 5, 8, 12, 16, 23, 38, 56, 72, 91};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Linear search  [23] → %d\n", linear_search(arr, n, 23));  /* 5 */
+    printf("Binary search  [23] → %d\n", binary_search(arr, n, 23));  /* 5 */
+    printf("Binary search  [99] → %d\n", binary_search(arr, n, 99));  /* -1 */
+    printf("Binary recursive[38] → %d\n",
+           binary_search_rec(arr, 0, n - 1, 38));                       /* 6 */
+    return 0;
+}

@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+void traverse(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("arr[%d] = %d
+", i, arr[i]);
+}
+
+void traverse_reverse(int arr[], int n) {
+    for (int i = n - 1; i >= 0; i--)
+        printf("arr[%d] = %d
+", i, arr[i]);
+}
+
+int main(void) {
+    int arr[] = {10, 20, 30, 40};
+    traverse(arr, 4);
+    return 0;
+}

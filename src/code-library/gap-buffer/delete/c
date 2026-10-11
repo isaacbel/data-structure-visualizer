@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define GAP_SIZE 8
+typedef struct { char *buf; int gap_start, gap_end, capacity; } GapBuffer;
+void gb_init(GapBuffer *g, const char *init){
+    int n=strlen(init); g->capacity=n+GAP_SIZE;
+    g->buf=malloc(g->capacity); memcpy(g->buf,init,n);
+    for(int i=n;i<n+GAP_SIZE;i++) g->buf[i]=0;
+    g->gap_start=n; g->gap_end=n+GAP_SIZE;
+}
+void gb_insert(GapBuffer *g, char c){ g->buf[g->gap_start++]=c; }
+char gb_delete(GapBuffer *g){ return g->gap_start>0 ? (g->buf[--g->gap_start]=0,'x') : 0; }
+void gb_move_gap(GapBuffer *g, int pos){
+    while(g->gap_start>pos){ g->gap_end--; g->gap_start--; g->buf[g->gap_end]=g->buf[g->gap_start]; g->buf[g->gap_start]=0; }
+    while(g->gap_start<pos){ g->buf[g->gap_start]=g->buf[g->gap_end]; g->buf[g->gap_end]=0; g->gap_start++; g->gap_end++; }
+}
+void gb_print(GapBuffer *g){ for(int i=0;i<g->capacity;i++) if(g->buf[i]) printf("%c",g->buf[i]); printf("\n"); }
+int main(void){ GapBuffer g; gb_init(&g,"hello world"); gb_move_gap(&g,5); gb_insert(&g,','); gb_print(&g); return 0; }

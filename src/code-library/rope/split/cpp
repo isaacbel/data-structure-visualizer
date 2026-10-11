@@ -1,0 +1,9 @@
+#include<string>
+#include<memory>
+#include<iostream>
+struct RopeNode{std::string val;int weight;std::shared_ptr<RopeNode>left,right;};
+std::shared_ptr<RopeNode>leaf(const std::string&s){auto n=std::make_shared<RopeNode>();n->val=s;n->weight=s.size();return n;}
+std::shared_ptr<RopeNode>concat(std::shared_ptr<RopeNode>a,std::shared_ptr<RopeNode>b){auto n=std::make_shared<RopeNode>();n->weight=a->weight;n->left=a;n->right=b;return n;}
+char rope_index(std::shared_ptr<RopeNode>n,int i){if(!n->left)return n->val[i];if(i<n->weight)return rope_index(n->left,i);return rope_index(n->right,i-n->weight);}
+std::string collect(std::shared_ptr<RopeNode>n){if(!n)return"";if(!n->left)return n->val;return collect(n->left)+collect(n->right);}
+int main(){auto a=leaf("Hello, ");auto b=leaf("World!");auto r=concat(a,b);std::cout<<rope_index(r,7)<<"\n";std::cout<<collect(r)<<"\n";}

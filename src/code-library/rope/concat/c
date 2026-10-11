@@ -1,0 +1,9 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+typedef struct RN{char*val;int weight;struct RN*left,*right;}RN;
+RN*rn_leaf(const char*s){RN*n=malloc(sizeof(RN));n->val=strdup(s);n->weight=strlen(s);n->left=n->right=NULL;return n;}
+RN*rn_concat(RN*a,RN*b){RN*n=malloc(sizeof(RN));n->val=NULL;n->weight=a?a->weight:0;n->left=a;n->right=b;return n;}
+char rn_index(RN*n,int i){if(!n->left)return n->val[i];if(i<n->weight)return rn_index(n->left,i);return rn_index(n->right,i-n->weight);}
+void rn_collect(RN*n,char*buf,int*pos){if(!n)return;if(!n->left){strcpy(buf+*pos,n->val);*pos+=strlen(n->val);}else{rn_collect(n->left,buf,pos);rn_collect(n->right,buf,pos);}}
+int main(void){RN*a=rn_leaf("Hello, ");RN*b=rn_leaf("World!");RN*r=rn_concat(a,b);printf("index 7: %c\n",rn_index(r,7));char buf[50]={0};int pos=0;rn_collect(r,buf,&pos);printf("%s\n",buf);return 0;}

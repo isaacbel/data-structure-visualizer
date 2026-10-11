@@ -1,0 +1,16 @@
+package main
+
+import "fmt"
+
+// Delete element at index. Returns new slice. O(n).
+func arrayDelete(arr []int, index int) ([]int, int) {
+    removed := arr[index]
+    arr = append(arr[:index], arr[index+1:]...)
+    return arr, removed
+}
+
+func main() {
+    arr := []int{10, 20, 30, 40}
+    arr, removed := arrayDelete(arr, 2)
+    fmt.Println(arr, "removed:", removed)  // [10 20 40] removed: 30
+}

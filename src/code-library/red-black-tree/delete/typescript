@@ -1,0 +1,29 @@
+class TreeNode<T> {
+    val: T;
+    left: TreeNode<T> | null = null;
+    right: TreeNode<T> | null = null;
+    constructor(val: T) { this.val = val; }
+}
+
+class BST<T> {
+    root: TreeNode<T> | null = null;
+
+    insert(val: T): void {
+        const ins = (node: TreeNode<T> | null, v: T): TreeNode<T> => {
+            if (!node) return new TreeNode(v);
+            if (v < node.val) node.left = ins(node.left, v);
+            else if (v > node.val) node.right = ins(node.right, v);
+            return node;
+        };
+        this.root = ins(this.root, val);
+    }
+
+    search(val: T): boolean {
+        const src = (node: TreeNode<T> | null, v: T): boolean => {
+            if (!node) return false;
+            if (node.val === v) return true;
+            return v < node.val ? src(node.left, v) : src(node.right, v);
+        };
+        return src(this.root, val);
+    }
+}

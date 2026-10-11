@@ -1,0 +1,7 @@
+#include <vector>
+#include <iostream>
+int main() {
+    std::vector<int> v = {10,20,30,40};
+    v.erase(v.begin() + 2);  // O(n)
+    for (int x : v) std::cout << x << " ";  // 10 20 40
+}

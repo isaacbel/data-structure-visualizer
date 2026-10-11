@@ -1,0 +1,25 @@
+import java.util.ArrayList;
+
+public class ArrayAccess {
+    // O(1) read.
+    public static <T> T access(ArrayList<T> arr, int index) {
+        if (index < 0 || index >= arr.size())
+            throw new IndexOutOfBoundsException("Index: " + index);
+        return arr.get(index);
+    }
+
+    // O(1) write.
+    public static <T> void update(ArrayList<T> arr, int index, T value) {
+        if (index < 0 || index >= arr.size())
+            throw new IndexOutOfBoundsException("Index: " + index);
+        arr.set(index, value);
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        arr.add(10); arr.add(20); arr.add(30); arr.add(40);
+        System.out.println(access(arr, 2));  // 30
+        update(arr, 2, 99);
+        System.out.println(arr.get(2));      // 99
+    }
+}

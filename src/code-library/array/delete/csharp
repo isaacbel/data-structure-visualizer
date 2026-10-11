@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+
+public class ArrayDelete {
+    public static T Delete<T>(List<T> arr, int index) {
+        T val = arr[index];
+        arr.RemoveAt(index);   // O(n)
+        return val;
+    }
+
+    public static void DeleteRaw(int[] arr, ref int n, int index) {
+        for (int i = index; i < n - 1; i++)
+            arr[i] = arr[i + 1];
+        n--;
+    }
+
+    public static void Main() {
+        var list = new List<int> { 10, 20, 30, 40 };
+        Delete(list, 2);
+        Console.WriteLine(string.Join(", ", list));  // 10, 20, 40
+    }
+}

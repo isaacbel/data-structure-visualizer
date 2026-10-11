@@ -1,0 +1,6 @@
+const v: number[] = [];
+v.push(10);  // O(1) amortized
+v.push(20);
+v.push(30);
+console.log(v);        // [10, 20, 30]
+console.log(v.length); // 3

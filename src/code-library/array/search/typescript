@@ -1,0 +1,55 @@
+// ─── Array Search: Linear Search & Binary Search (TypeScript) ────────────────
+// Time Complexity:  Linear O(n) | Binary O(log n)
+// Space Complexity: O(1)
+
+/**
+ * Linear search for any comparable type.
+ * Works on unsorted arrays.
+ */
+function linearSearch<T>(arr: T[], target: T): number {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) return i;
+  }
+  return -1;
+}
+
+/**
+ * Binary search on a sorted array of numbers.
+ * Requires arr to be sorted in ascending order.
+ */
+function binarySearch(arr: number[], target: number): number {
+  let lo = 0, hi = arr.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >>> 1;
+    if (arr[mid] === target) return mid;
+    else if (arr[mid] < target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}
+
+/**
+ * Generic binary search with a comparator function.
+ * comparator(a, b): negative if a < b, 0 if equal, positive if a > b
+ */
+function binarySearchGeneric<T>(
+  arr: T[],
+  target: T,
+  comparator: (a: T, b: T) => number
+): number {
+  let lo = 0, hi = arr.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >>> 1;
+    const cmp = comparator(arr[mid], target);
+    if (cmp === 0) return mid;
+    else if (cmp < 0) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}
+
+// ─── Example ──────────────────────────────────────────────────────────────────
+const sorted: number[] = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91];
+console.log(binarySearch(sorted, 23));   // 5
+console.log(binarySearch(sorted, 99));   // -1
+console.log(linearSearch(['a','b','c'], 'b')); // 1

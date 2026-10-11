@@ -1,0 +1,50 @@
+# ─── Union-Find (Disjoint Set Union) ─────────────────────────────────────────
+# Time:  Find/Union O(α(n)) ≈ O(1)  (inverse Ackermann — virtually constant)
+# Space: O(n)
+# Techniques: Path compression + Union by rank
+
+class UnionFind:
+    def __init__(self, n: int):
+        """Initialize n disjoint sets: {0}, {1}, ..., {n-1}."""
+        self.parent = list(range(n))  # parent[i] = i (own parent = root)
+        self.rank   = [0] * n         # Height upper bound for each root
+        self.components = n           # Number of connected components
+
+    def find(self, x: int) -> int:
+        """Find root of x with path compression. O(α(n))."""
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])  # Path compression
+        return self.parent[x]
+
+    def union(self, x: int, y: int) -> bool:
+        """
+        Merge sets containing x and y. Returns True if they were different.
+        Uses union by rank to keep tree shallow.
+        """
+        rx, ry = self.find(x), self.find(y)
+        if rx == ry: return False       # Already in same set
+        # Attach smaller tree under larger (by rank)
+        if self.rank[rx] < self.rank[ry]:
+            rx, ry = ry, rx
+        self.parent[ry] = rx
+        if self.rank[rx] == self.rank[ry]:
+            self.rank[rx] += 1
+        self.components -= 1
+        return True
+
+    def connected(self, x: int, y: int) -> bool:
+        """Check if x and y are in the same component. O(α(n))."""
+        return self.find(x) == self.find(y)
+
+    def count_components(self) -> int:
+        return self.components
+
+if __name__ == '__main__':
+    uf = UnionFind(6)          # Nodes: 0 1 2 3 4 5
+    uf.union(0, 1)             # {0,1} {2} {3} {4} {5}
+    uf.union(1, 2)             # {0,1,2} {3} {4} {5}
+    uf.union(3, 4)             # {0,1,2} {3,4} {5}
+
+    print(uf.connected(0, 2))  # True  (same component)
+    print(uf.connected(0, 3))  # False (different components)
+    print(uf.count_components())  # 3

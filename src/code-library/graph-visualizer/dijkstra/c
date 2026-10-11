@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_V 100
+int adj[MAX_V][MAX_V];
+int V;
+
+void bfs(int start) {
+    int visited[MAX_V] = {0};
+    int q[MAX_V], front = 0, rear = 0;
+    q[rear++] = start;
+    visited[start] = 1;
+    while (front < rear) {
+        int u = q[front++];
+        printf("%d ", u);
+        for (int v = 0; v < V; v++) {
+            if (adj[u][v] && !visited[v]) {
+                visited[v] = 1;
+                q[rear++] = v;
+            }
+        }
+    }
+}
+
+void dfs_rec(int u, int visited[]) {
+    visited[u] = 1;
+    printf("%d ", u);
+    for (int v = 0; v < V; v++) {
+        if (adj[u][v] && !visited[v]) dfs_rec(v, visited);
+    }
+}

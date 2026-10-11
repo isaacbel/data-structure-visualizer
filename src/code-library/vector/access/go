@@ -1,0 +1,8 @@
+package main
+import "fmt"
+func main() {
+    v := []int{10,20,30,40}
+    fmt.Println(v[2])   // 30 — O(1)
+    v[2] = 99
+    fmt.Println(v[2])   // 99
+}

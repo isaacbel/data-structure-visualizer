@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* O(1) random access by index. */
+int access(int arr[], int n, int index) {
+    if (index < 0 || index >= n) {
+        fprintf(stderr, "Index %d out of range\n", index);
+        exit(EXIT_FAILURE);
+    }
+    return arr[index];
+}
+
+void update(int arr[], int n, int index, int value) {
+    if (index < 0 || index >= n) {
+        fprintf(stderr, "Index %d out of range\n", index);
+        exit(EXIT_FAILURE);
+    }
+    arr[index] = value;
+}
+
+int main(void) {
+    int arr[] = {10, 20, 30, 40};
+    printf("%d
+", access(arr, 4, 2));  /* 30 */
+    update(arr, 4, 2, 99);
+    printf("%d
+", arr[2]);             /* 99 */
+    return 0;
+}

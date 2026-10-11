@@ -1,0 +1,29 @@
+class DynamicArray:
+    """Dynamic array (like Python list) with amortized O(1) push_back."""
+    def __init__(self):
+        self._data = []
+        self._size = 0
+        self._capacity = 1
+
+    def push_back(self, value) -> None:
+        if self._size == self._capacity:
+            self._resize(self._capacity * 2)
+        self._data.append(value)
+        self._size += 1
+
+    def _resize(self, new_cap: int) -> None:
+        new_data = [None] * new_cap
+        for i in range(self._size):
+            new_data[i] = self._data[i]
+        self._data = new_data
+        self._capacity = new_cap
+
+    def __len__(self): return self._size
+    def __getitem__(self, i): return self._data[i]
+
+# Python list has built-in dynamic resizing:
+v = []
+v.append(10)   # push_back O(1) amortized
+v.append(20)
+v.append(30)
+print(v)  # [10, 20, 30]

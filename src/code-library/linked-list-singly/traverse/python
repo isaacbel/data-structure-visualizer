@@ -1,0 +1,46 @@
+class Node:
+    def __init__(self, val, next=None):
+        self.val  = val
+        self.next = next
+
+class SinglyLinkedList:
+    def __init__(self): self.head = None
+
+    def insert_head(self, val) -> None:
+        self.head = Node(val, self.head)   # O(1)
+
+    def insert_tail(self, val) -> None:   # O(n)
+        node = Node(val)
+        if not self.head: self.head = node; return
+        cur = self.head
+        while cur.next: cur = cur.next
+        cur.next = node
+
+    def delete(self, val) -> bool:        # O(n)
+        if not self.head: return False
+        if self.head.val == val: self.head = self.head.next; return True
+        cur = self.head
+        while cur.next:
+            if cur.next.val == val: cur.next = cur.next.next; return True
+            cur = cur.next
+        return False
+
+    def search(self, val) -> bool:        # O(n)
+        cur = self.head
+        while cur:
+            if cur.val == val: return True
+            cur = cur.next
+        return False
+
+    def traverse(self) -> list:
+        result, cur = [], self.head
+        while cur: result.append(cur.val); cur = cur.next
+        return result
+
+ll = SinglyLinkedList()
+ll.insert_head(30); ll.insert_head(20); ll.insert_head(10)
+ll.insert_tail(40)
+print(ll.traverse())   # [10, 20, 30, 40]
+ll.delete(20)
+print(ll.traverse())   # [10, 30, 40]
+print(ll.search(30))   # True

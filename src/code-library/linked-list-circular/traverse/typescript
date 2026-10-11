@@ -1,0 +1,7 @@
+interface CNd{v:number;next:CNd}
+class CLL{
+    private tail:CNd|null=null;
+    insert(v:number){const n:any={v,next:null};if(!this.tail){n.next=n;this.tail=n;}else{n.next=this.tail.next;this.tail.next=n;}}
+    search(v:number):boolean{if(!this.tail)return false;let c=this.tail.next;do{if(c.v===v)return true;c=c.next;}while(c!==this.tail.next);return false;}
+    traverse():number[]{if(!this.tail)return[];const r:number[]=[];let c=this.tail.next;do{r.push(c.v);c=c.next;}while(c!==this.tail.next);return r;}
+}

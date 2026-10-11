@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+struct Node {
+    int val;
+    Node *left = nullptr, *right = nullptr;
+    Node(int v) : val(v) {}
+};
+
+class BST {
+    Node* root = nullptr;
+    Node* insert(Node* n, int v) {
+        if (!n) return new Node(v);
+        if (v < n->val) n->left = insert(n->left, v);
+        else if (v > n->val) n->right = insert(n->right, v);
+        return n;
+    }
+    bool search(Node* n, int v) {
+        if (!n) return false;
+        if (n->val == v) return true;
+        return v < n->val ? search(n->left, v) : search(n->right, v);
+    }
+    Node* remove(Node* n, int v) {
+        if (!n) return nullptr;
+        if (v < n->val) n->left = remove(n->left, v);
+        else if (v > n->val) n->right = remove(n->right, v);
+        else {
+            if (!n->left) { Node* r = n->right; delete n; return r; }
+            if (!n->right) { Node* l = n->left; delete n; return l; }
+            Node* s = n->right;
+            while (s->left) s = s->left;
+            n->val = s->val;
+            n->right = remove(n->right, s->val);
+        }
+        return n;
+    }
+public:
+    void insert(int v) { root = insert(root, v); }
+    bool search(int v) { return search(root, v); }
+    void remove(int v) { root = remove(root, v); }
+};

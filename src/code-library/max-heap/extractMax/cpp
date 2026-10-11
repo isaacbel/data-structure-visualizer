@@ -1,0 +1,9 @@
+#include <vector>
+#include <algorithm>
+#include <iostream>
+class Heap {
+    std::vector<int> h;
+public:
+    void insert(int v) { h.push_back(v); std::push_heap(h.begin(), h.end(), std::greater<int>()); }
+    int extract() { std::pop_heap(h.begin(), h.end(), std::greater<int>()); int v = h.back(); h.pop_back(); return v; }
+};

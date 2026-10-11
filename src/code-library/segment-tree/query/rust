@@ -1,0 +1,48 @@
+pub struct SegmentTree {
+    tree: Vec<i32>,
+    n: usize,
+}
+
+impl SegmentTree {
+    pub fn new(arr: &[i32]) -> Self {
+        let n = arr.len();
+        let mut tree = vec![0; 4 * n];
+        let mut st = SegmentTree { tree, n };
+        if n > 0 {
+            st.build(arr, 0, 0, n - 1);
+        }
+        st
+    }
+
+    fn build(&mut self, arr: &[i32], node: usize, start: usize, end: usize) {
+        if start == end {
+            self.tree[node] = arr[start];
+            return;
+        }
+        let mid = (start + end) / 2;
+        self.build(arr, 2 * node + 1, start, mid);
+        self.build(arr, 2 * node + 2, mid + 1, end);
+        self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2];
+    }
+
+    pub fn query(&self, l: usize, r: usize, node: usize, start: usize, end: usize) -> i32 {
+        if r < start || end < l { return 0; }
+        if l <= start && end <= r { return self.tree[node]; }
+        let mid = (start + end) / 2;
+        self.query(l, r, 2 * node + 1, start, mid) + self.query(l, r, 2 * node + 2, mid + 1, end)
+    }
+
+    pub fn update(&mut self, idx: usize, val: i32, node: usize, start: usize, end: usize) {
+        if start == end {
+            self.tree[node] = val;
+            return;
+        }
+        let mid = (start + end) / 2;
+        if start <= idx && idx <= mid {
+            self.update(idx, val, 2 * node + 1, start, mid);
+        } else {
+            self.update(idx, val, 2 * node + 2, mid + 1, end);
+        }
+        self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2];
+    }
+}

@@ -1,0 +1,3 @@
+v = [10,20,30,40]
+v.pop(2)   # delete at index — O(n)
+print(v)   # [10, 20, 40]

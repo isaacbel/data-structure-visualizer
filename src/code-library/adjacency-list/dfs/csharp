@@ -1,0 +1,6 @@
+using System.Collections.Generic;
+public class Graph {
+    int V;
+    List<List<(int to, int weight)>> adj;
+    public Graph(int v) { V = v; adj = new List<List<(int, int)>>(); }
+}

@@ -1,0 +1,25 @@
+#include <vector>
+#include <iostream>
+#include <stdexcept>
+
+// O(1) random access.
+int access(const std::vector<int>& arr, int index) {
+    if (index < 0 || index >= (int)arr.size())
+        throw std::out_of_range("Index out of range");
+    return arr[index];        // or arr.at(index) for bounds-checked
+}
+
+void update(std::vector<int>& arr, int index, int value) {
+    if (index < 0 || index >= (int)arr.size())
+        throw std::out_of_range("Index out of range");
+    arr[index] = value;
+}
+
+int main() {
+    std::vector<int> arr = {10, 20, 30, 40};
+    std::cout << access(arr, 2) << "
+";  // 30
+    update(arr, 2, 99);
+    std::cout << arr[2] << "
+";          // 99
+}

@@ -1,0 +1,15 @@
+package main
+
+import "fmt"
+
+func popBack(v []int) ([]int, int) {
+    n := len(v)
+    if n == 0 { panic("pop on empty slice") }
+    return v[:n-1], v[n-1]  // O(1)
+}
+
+func main() {
+    v := []int{10, 20, 30}
+    v, last := popBack(v)
+    fmt.Println(last, v)  // 30 [10 20]
+}

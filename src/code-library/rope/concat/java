@@ -1,0 +1,12 @@
+public class Rope{
+    static class N{String val;int w;N left,right;N(String s){val=s;w=s.length();}}
+    N root;
+    Rope(String s){root=new N(s);}
+    Rope(N n){root=n;}
+    char index(int i){return idx(root,i);}
+    char idx(N n,int i){if(n.left==null)return n.val.charAt(i);if(i<n.w)return idx(n.left,i);return idx(n.right,i-n.w);}
+    Rope concat(Rope other){N n=new N("");n.w=root.w;n.left=root;n.right=other.root;return new Rope(n);}
+    String collect(){return col(root);}
+    String col(N n){if(n==null)return"";if(n.left==null)return n.val;return col(n.left)+col(n.right);}
+    public static void main(String[]a){Rope r1=new Rope("Hello, ");Rope r2=new Rope("World!");Rope r3=r1.concat(r2);System.out.println(r3.collect());System.out.println(r3.index(7));}
+}

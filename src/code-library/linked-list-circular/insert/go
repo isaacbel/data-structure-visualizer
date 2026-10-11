@@ -1,0 +1,8 @@
+package main
+import "fmt"
+type CN struct{V int;Next*CN}
+type CLL struct{Tail*CN}
+func(c*CLL)Insert(v int){n:=&CN{V:v};if c.Tail==nil{n.Next=n;c.Tail=n}else{n.Next=c.Tail.Next;c.Tail.Next=n}}
+func(c*CLL)Search(v int)bool{if c.Tail==nil{return false};cur:=c.Tail.Next;for{if cur.V==v{return true};cur=cur.Next;if cur==c.Tail.Next{break}};return false}
+func(c*CLL)Traverse()[]int{if c.Tail==nil{return nil};var r[]int;cur:=c.Tail.Next;for{r=append(r,cur.V);cur=cur.Next;if cur==c.Tail.Next{break}};return r}
+func main(){c:=&CLL{};c.Insert(3);c.Insert(2);c.Insert(1);fmt.Println(c.Traverse())}

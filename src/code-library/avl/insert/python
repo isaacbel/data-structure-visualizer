@@ -1,0 +1,70 @@
+class TreeNode:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, val):
+        self.root = self._insert(self.root, val)
+
+    def _insert(self, node, val):
+        if not node: return TreeNode(val)
+        if val < node.val: node.left = self._insert(node.left, val)
+        elif val > node.val: node.right = self._insert(node.right, val)
+        return node
+
+    def search(self, val) -> bool:
+        return self._search(self.root, val)
+
+    def _search(self, node, val) -> bool:
+        if not node: return False
+        if val == node.val: return True
+        return self._search(node.left, val) if val < node.val else self._search(node.right, val)
+
+    def delete(self, val):
+        self.root = self._delete(self.root, val)
+
+    def _delete(self, node, val):
+        if not node: return None
+        if val < node.val: node.left = self._delete(node.left, val)
+        elif val > node.val: node.right = self._delete(node.right, val)
+        else:
+            if not node.left: return node.right
+            if not node.right: return node.left
+            succ = node.right
+            while succ.left: succ = succ.left
+            node.val = succ.val
+            node.right = self._delete(node.right, succ.val)
+        return node
+
+    def inorder(self):
+        res = []
+        def _in(n):
+            if n: _in(n.left); res.append(n.val); _in(n.right)
+        _in(self.root); return res
+
+    def preorder(self):
+        res = []
+        def _pre(n):
+            if n: res.append(n.val); _pre(n.left); _pre(n.right)
+        _pre(self.root); return res
+
+    def postorder(self):
+        res = []
+        def _post(n):
+            if n: _post(n.left); _post(n.right); res.append(n.val)
+        _post(self.root); return res
+
+    def levelorder(self):
+        if not self.root: return []
+        res, q = [], [self.root]
+        while q:
+            curr = q.pop(0)
+            res.append(curr.val)
+            if curr.left: q.append(curr.left)
+            if curr.right: q.append(curr.right)
+        return res

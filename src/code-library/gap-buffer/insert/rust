@@ -1,0 +1,21 @@
+pub struct GapBuffer { buf: Vec<u8>, gs: usize, ge: usize }
+impl GapBuffer {
+    pub fn new(s: &str, gap_size: usize) -> Self {
+        let n = s.len();
+        let mut buf = Vec::with_capacity(n + gap_size);
+        buf.extend_from_slice(s.as_bytes());
+        buf.extend(std::iter::repeat(0u8).take(gap_size));
+        GapBuffer { buf, gs: n, ge: n + gap_size }
+    }
+    pub fn insert(&mut self, c: u8) { self.buf[self.gs] = c; self.gs += 1; }
+    pub fn delete(&mut self) -> Option<u8> {
+        if self.gs == 0 { return None; }
+        self.gs -= 1; let c = self.buf[self.gs]; self.buf[self.gs] = 0; Some(c)
+    }
+    pub fn move_gap(&mut self, pos: usize) {
+        while self.gs > pos { self.ge -= 1; self.gs -= 1; self.buf[self.ge] = self.buf[self.gs]; self.buf[self.gs] = 0; }
+        while self.gs < pos { self.buf[self.gs] = self.buf[self.ge]; self.buf[self.ge] = 0; self.gs += 1; self.ge += 1; }
+    }
+    pub fn content(&self) -> String { self.buf.iter().filter(|&&b| b != 0).map(|&b| b as char).collect() }
+}
+fn main() { let mut g = GapBuffer::new("hello world", 8); g.move_gap(5); g.insert(b','); println!("{}", g.content()); }

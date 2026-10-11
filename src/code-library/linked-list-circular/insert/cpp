@@ -1,0 +1,9 @@
+#include<iostream>
+struct CN{int v;CN*next;CN(int x):v(x),next(nullptr){}};
+class CLL{CN*tail=nullptr;int sz=0;
+public:
+    void insert(int v){CN*n=new CN(v);if(!tail){n->next=n;tail=n;}else{n->next=tail->next;tail->next=n;}sz++;}
+    bool search(int v){if(!tail)return false;CN*c=tail->next;do{if(c->v==v)return true;c=c->next;}while(c!=tail->next);return false;}
+    void traverse(){if(!tail)return;CN*c=tail->next;do{std::cout<<c->v<<"->";c=c->next;}while(c!=tail->next);std::cout<<"(head)\n";}
+};
+int main(){CLL c;c.insert(3);c.insert(2);c.insert(1);c.traverse();}

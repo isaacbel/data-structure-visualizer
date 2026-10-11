@@ -1,0 +1,17 @@
+using System;
+using System.Collections.Generic;
+
+public class VectorPopBack {
+    public static T PopBack<T>(List<T> v) {
+        if (v.Count == 0) throw new InvalidOperationException("pop on empty list");
+        T last = v[v.Count - 1];
+        v.RemoveAt(v.Count - 1);  // O(1)
+        return last;
+    }
+
+    public static void Main() {
+        var v = new List<int> { 10, 20, 30 };
+        Console.WriteLine(PopBack(v));  // 30
+        Console.WriteLine(string.Join(", ", v));  // 10, 20
+    }
+}

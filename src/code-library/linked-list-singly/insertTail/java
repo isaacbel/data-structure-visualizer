@@ -1,0 +1,17 @@
+public class SinglyLinkedList<T> {
+    static class Node<T>{ T val; Node<T> next; Node(T v){val=v;} }
+    Node<T> head;
+
+    void insertHead(T v)  { head=new Node<>(v); head.next=head; /* */ Node<T> n=new Node<>(v); n.next=head; head=n; }
+    void insertTail(T v)  { Node<T> n=new Node<>(v); if(head==null){head=n;return;} Node<T> c=head; while(c.next!=null)c=c.next; c.next=n; }
+    boolean delete(T v)   { if(head==null) return false; if(head.val.equals(v)){head=head.next;return true;} Node<T> c=head; while(c.next!=null){if(c.next.val.equals(v)){c.next=c.next.next;return true;}c=c.next;} return false; }
+    boolean search(T v)   { Node<T> c=head; while(c!=null){if(c.val.equals(v))return true;c=c.next;} return false; }
+    void traverse()       { Node<T> c=head; while(c!=null){System.out.print(c.val+"->");c=c.next;} System.out.println("null"); }
+
+    public static void main(String[] a){
+        SinglyLinkedList<Integer> ll=new SinglyLinkedList<>();
+        ll.insertHead(30); ll.insertHead(20); ll.insertHead(10);
+        ll.insertTail(40); ll.traverse();  // 10->20->30->40->null
+        ll.delete(20);     ll.traverse();  // 10->30->40->null
+    }
+}

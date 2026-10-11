@@ -1,0 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct DNode{int val;struct DNode*prev,*next;}DNode;
+typedef struct{DNode*head,*tail;int size;}DLL;
+DNode*dn(int v){DNode*n=malloc(sizeof(DNode));n->val=v;n->prev=n->next=NULL;return n;}
+void dll_insert_head(DLL*d,int v){DNode*n=dn(v);n->next=d->head;if(d->head)d->head->prev=n;else d->tail=n;d->head=n;d->size++;}
+void dll_insert_tail(DLL*d,int v){DNode*n=dn(v);n->prev=d->tail;if(d->tail)d->tail->next=n;else d->head=n;d->tail=n;d->size++;}
+int  dll_delete(DLL*d,int v){DNode*c=d->head;while(c){if(c->val==v){if(c->prev)c->prev->next=c->next;else d->head=c->next;if(c->next)c->next->prev=c->prev;else d->tail=c->prev;free(c);d->size--;return 1;}c=c->next;}return 0;}
+int  dll_search(DLL*d,int v){DNode*c=d->head;while(c){if(c->val==v)return 1;c=c->next;}return 0;}
+void dll_traverse(DLL*d){DNode*c=d->head;while(c){printf("%d<->",c->val);c=c->next;}printf("NULL\n");}
+int main(void){DLL d={NULL,NULL,0};dll_insert_head(&d,20);dll_insert_head(&d,10);dll_insert_tail(&d,30);dll_traverse(&d);dll_delete(&d,20);dll_traverse(&d);return 0;}

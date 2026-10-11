@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+typedef struct XNode { int val; struct XNode *npx; } XNode;
+
+/* XOR of two pointers */
+XNode* XOR(XNode *a, XNode *b) { return (XNode*)((uintptr_t)a ^ (uintptr_t)b); }
+
+XNode* xor_new(int v) { XNode *n=malloc(sizeof(XNode)); n->val=v; n->npx=NULL; return n; }
+
+void insert_head(XNode **head, XNode **tail, int v) {
+    XNode *n = xor_new(v);
+    n->npx = XOR(NULL, *head);
+    if (*head) (*head)->npx = XOR(n, XOR(NULL, (*head)->npx));
+    *head = n;
+    if (!*tail) *tail = n;
+}
+
+void insert_tail(XNode **head, XNode **tail, int v) {
+    XNode *n = xor_new(v);
+    n->npx = XOR(*tail, NULL);
+    if (*tail) (*tail)->npx = XOR(XOR((*tail)->npx, NULL), n);
+    *tail = n;
+    if (!*head) *head = n;
+}
+
+void traverse(XNode *head) {
+    XNode *cur=head, *prev=NULL, *next;
+    while (cur) {
+        printf("%d ", cur->val);
+        next = XOR(prev, cur->npx);
+        prev = cur; cur = next;
+    }
+    printf("\n");
+}
+
+int main(void) {
+    XNode *head=NULL, *tail=NULL;
+    insert_tail(&head,&tail,10); insert_tail(&head,&tail,20); insert_tail(&head,&tail,30);
+    traverse(head);  // 10 20 30
+    return 0;
+}

@@ -1,0 +1,39 @@
+class DNode:
+    def __init__(self, val): self.val=val; self.prev=self.next=None
+class DoublyLinkedList:
+    def __init__(self): self.head=self.tail=None; self._size=0
+    def insert_head(self,v):
+        n=DNode(v); n.next=self.head
+        if self.head: self.head.prev=n
+        else: self.tail=n
+        self.head=n; self._size+=1
+    def insert_tail(self,v):
+        n=DNode(v); n.prev=self.tail
+        if self.tail: self.tail.next=n
+        else: self.head=n
+        self.tail=n; self._size+=1
+    def delete(self,v):
+        c=self.head
+        while c:
+            if c.val==v:
+                if c.prev: c.prev.next=c.next
+                else: self.head=c.next
+                if c.next: c.next.prev=c.prev
+                else: self.tail=c.prev
+                self._size-=1; return True
+            c=c.next
+        return False
+    def search(self,v):
+        c=self.head
+        while c:
+            if c.val==v: return True
+            c=c.next
+        return False
+    def traverse(self):
+        r=[]; c=self.head
+        while c: r.append(c.val); c=c.next
+        return r
+dll=DoublyLinkedList()
+dll.insert_head(20); dll.insert_head(10); dll.insert_tail(30)
+print(dll.traverse())  # [10,20,30]
+dll.delete(20); print(dll.traverse())  # [10,30]

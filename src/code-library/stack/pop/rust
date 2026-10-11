@@ -1,0 +1,17 @@
+struct Stack<T>(Vec<T>);
+impl<T> Stack<T> {
+    fn new()              -> Self { Stack(Vec::new()) }
+    fn push(&mut self, v: T)       { self.0.push(v); }
+    fn pop(&mut self) -> Option<T> { self.0.pop() }
+    fn peek(&self)    -> Option<&T>{ self.0.last() }
+    fn is_empty(&self)-> bool      { self.0.is_empty() }
+    fn size(&self)    -> usize     { self.0.len() }
+}
+
+fn main() {
+    let mut s: Stack<i32> = Stack::new();
+    s.push(10); s.push(20); s.push(30);
+    println!("peek={:?}", s.peek());   // Some(30)
+    println!("pop={:?}",  s.pop());    // Some(30)
+    println!("size={}",   s.size());   // 2
+}

@@ -1,0 +1,8 @@
+#include <stdio.h>
+void build(int tree[], int arr[], int node, int start, int end) {
+    if (start == end) { tree[node] = arr[start]; return; }
+    int mid = (start + end) / 2;
+    build(tree, arr, 2*node+1, start, mid);
+    build(tree, arr, 2*node+2, mid+1, end);
+    tree[node] = tree[2*node+1] + tree[2*node+2];
+}

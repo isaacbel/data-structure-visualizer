@@ -1,0 +1,4 @@
+using System.Collections.Generic;
+public class HashTableDemo {
+    Dictionary<string, int> dict = new Dictionary<string, int>();
+}

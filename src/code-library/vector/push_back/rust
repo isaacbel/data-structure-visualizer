@@ -1,0 +1,9 @@
+fn main() {
+    let mut v: Vec<i32> = Vec::with_capacity(4);
+    v.push(10);  // O(1) amortized
+    v.push(20);
+    v.push(30);
+    println!("{:?}", v);       // [10, 20, 30]
+    println!("len={}", v.len());
+    println!("cap={}", v.capacity());
+}

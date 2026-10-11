@@ -1,0 +1,22 @@
+package main
+
+import (
+    "container/list"
+    "fmt"
+)
+
+type Queue struct { l *list.List }
+func NewQueue()            *Queue { return &Queue{l: list.New()} }
+func (q *Queue) Enqueue(v int)    { q.l.PushBack(v) }
+func (q *Queue) Dequeue() int     { e := q.l.Front(); q.l.Remove(e); return e.Value.(int) }
+func (q *Queue) Peek() int        { return q.l.Front().Value.(int) }
+func (q *Queue) IsEmpty() bool    { return q.l.Len() == 0 }
+func (q *Queue) Size() int        { return q.l.Len() }
+
+func main() {
+    q := NewQueue()
+    q.Enqueue(10); q.Enqueue(20); q.Enqueue(30)
+    fmt.Println("peek=", q.Peek())    // 10
+    fmt.Println("deq=",  q.Dequeue()) // 10
+    fmt.Println("size=", q.Size())    // 2
+}

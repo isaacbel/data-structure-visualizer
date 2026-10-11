@@ -1,0 +1,42 @@
+import java.util.*;
+
+public class BST {
+    static class Node {
+        int val;
+        Node left, right;
+        Node(int v) { val = v; }
+    }
+
+    Node root;
+
+    public void insert(int val) { root = insert(root, val); }
+    private Node insert(Node n, int val) {
+        if (n == null) return new Node(val);
+        if (val < n.val) n.left = insert(n.left, val);
+        else if (val > n.val) n.right = insert(n.right, val);
+        return n;
+    }
+
+    public boolean search(int val) { return search(root, val); }
+    private boolean search(Node n, int val) {
+        if (n == null) return false;
+        if (n.val == val) return true;
+        return val < n.val ? search(n.left, val) : search(n.right, val);
+    }
+
+    public void delete(int val) { root = delete(root, val); }
+    private Node delete(Node n, int val) {
+        if (n == null) return null;
+        if (val < n.val) n.left = delete(n.left, val);
+        else if (val > n.val) n.right = delete(n.right, val);
+        else {
+            if (n.left == null) return n.right;
+            if (n.right == null) return n.left;
+            Node succ = n.right;
+            while (succ.left != null) succ = succ.left;
+            n.val = succ.val;
+            n.right = delete(n.right, succ.val);
+        }
+        return n;
+    }
+}

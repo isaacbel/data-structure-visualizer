@@ -1,0 +1,25 @@
+#include <vector>
+#include <queue>
+#include <iostream>
+
+using namespace std;
+
+class Graph {
+    int V;
+    vector<vector<pair<int,int>>> adj;
+public:
+    Graph(int v) : V(v), adj(v) {}
+    void addEdge(int u, int v, int w=1) { adj[u].push_back({v,w}); }
+    void bfs(int start) {
+        vector<bool> vis(V, false);
+        queue<int> q;
+        q.push(start); vis[start] = true;
+        while(!q.empty()) {
+            int u = q.front(); q.pop();
+            cout << u << " ";
+            for(auto& edge : adj[u]) {
+                if(!vis[edge.first]) { vis[edge.first] = true; q.push(edge.first); }
+            }
+        }
+    }
+};

@@ -1,0 +1,16 @@
+class CircularQueue {
+    constructor(capacity) {
+        this._cap  = capacity + 1;
+        this._data = new Array(this._cap);
+        this._head = 0; this._tail = 0;
+    }
+    enqueue(v) { if(this.isFull()) return false; this._data[this._tail]=v; this._tail=(this._tail+1)%this._cap; return true; }
+    dequeue()  { if(this.isEmpty()) throw new Error("empty"); const v=this._data[this._head]; this._head=(this._head+1)%this._cap; return v; }
+    peek()     { if(this.isEmpty()) throw new Error("empty"); return this._data[this._head]; }
+    isEmpty()  { return this._head===this._tail; }
+    isFull()   { return (this._tail+1)%this._cap===this._head; }
+    size()     { return (this._tail-this._head+this._cap)%this._cap; }
+}
+const q = new CircularQueue(3);
+q.enqueue(1); q.enqueue(2); q.enqueue(3);
+console.log(q.peek(), q.dequeue());  // 1 1

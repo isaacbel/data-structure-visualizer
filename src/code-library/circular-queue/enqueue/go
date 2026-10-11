@@ -1,0 +1,14 @@
+package main
+import "fmt"
+type CircularQueue struct { data []int; head,tail,cap int }
+func NewCQ(c int) *CircularQueue { return &CircularQueue{data:make([]int,c+1), cap:c+1} }
+func (q *CircularQueue) Enqueue(v int) bool { if q.Full() { return false }; q.data[q.tail]=v; q.tail=(q.tail+1)%q.cap; return true }
+func (q *CircularQueue) Dequeue() int       { v:=q.data[q.head]; q.head=(q.head+1)%q.cap; return v }
+func (q *CircularQueue) Peek() int          { return q.data[q.head] }
+func (q *CircularQueue) Empty() bool        { return q.head==q.tail }
+func (q *CircularQueue) Full() bool         { return (q.tail+1)%q.cap==q.head }
+func main(){
+    q := NewCQ(3)
+    q.Enqueue(1); q.Enqueue(2); q.Enqueue(3)
+    fmt.Println(q.Peek(), q.Dequeue())  // 1 1
+}

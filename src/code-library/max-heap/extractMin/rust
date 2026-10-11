@@ -1,0 +1,8 @@
+use std::collections::BinaryHeap;
+use std::cmp::Reverse;
+fn heap_demo() {
+    let mut heap = BinaryHeap::new();
+    heap.push(Reverse(5));
+    heap.push(Reverse(1));
+    let min = heap.pop().unwrap().0;
+}

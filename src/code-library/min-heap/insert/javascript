@@ -1,0 +1,7 @@
+class MinHeap {
+    constructor() { this.heap = []; }
+    insert(val) { this.heap.push(val); this._up(this.heap.length - 1); }
+    extract() { const min = this.heap[0]; const end = this.heap.pop(); if (this.heap.length > 0) { this.heap[0] = end; this._down(0); } return min; }
+    _up(i) { while (i > 0) { int p = (i - 1) >> 1; if (this.heap[p] <= this.heap[i]) break; [this.heap[p], this.heap[i]] = [this.heap[i], this.heap[p]]; i = p; } }
+    _down(i) { const len = this.heap.length; while (2*i + 1 < len) { int l = 2*i + 1, r = 2*i + 2, min = l; if (r < len && this.heap[r] < this.heap[l]) min = r; if (this.heap[i] <= this.heap[min]) break; [this.heap[i], this.heap[min]] = [this.heap[min], this.heap[i]]; i = min; } }
+}

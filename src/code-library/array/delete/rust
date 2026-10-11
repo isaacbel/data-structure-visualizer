@@ -1,0 +1,9 @@
+fn array_delete(arr: &mut Vec<i32>, index: usize) -> i32 {
+    arr.remove(index)  // O(n) — shifts elements left
+}
+
+fn main() {
+    let mut arr = vec![10, 20, 30, 40];
+    let removed = array_delete(&mut arr, 2);
+    println!("{:?}  removed: {}", arr, removed);  // [10, 20, 40] removed: 30
+}

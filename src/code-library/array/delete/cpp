@@ -1,0 +1,16 @@
+#include <vector>
+#include <iostream>
+#include <stdexcept>
+
+// Remove element at index. O(n).
+void array_delete(std::vector<int>& arr, int index) {
+    if (index < 0 || index >= (int)arr.size())
+        throw std::out_of_range("Index out of bounds");
+    arr.erase(arr.begin() + index);
+}
+
+int main() {
+    std::vector<int> arr = {10, 20, 30, 40};
+    array_delete(arr, 2);
+    for (int x : arr) std::cout << x << " ";  // 10 20 40
+}

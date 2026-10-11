@@ -1,0 +1,8 @@
+function popBack<T>(v: T[]): T {
+    if (v.length === 0) throw new Error("pop on empty vector");
+    return v.pop()!;  // O(1)
+}
+
+const v: number[] = [10, 20, 30];
+console.log(popBack(v));  // 30
+console.log(v);           // [10, 20]

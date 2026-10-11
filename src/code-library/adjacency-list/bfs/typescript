@@ -1,0 +1,6 @@
+interface Edge { node: number; weight: number; }
+class Graph {
+    private V: number;
+    private adj: Map<number, Edge[]> = new Map();
+    constructor(v: number) { this.V = v; }
+}

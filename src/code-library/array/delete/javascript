@@ -1,0 +1,19 @@
+// Remove element at index. O(n).
+function arrayDelete(arr, index) {
+    if (index < 0 || index >= arr.length)
+        throw new RangeError("Index out of bounds");
+    return arr.splice(index, 1)[0];
+}
+
+// Manual (no splice):
+function arrayDeleteManual(arr, index) {
+    const removed = arr[index];
+    for (let i = index; i < arr.length - 1; i++)
+        arr[i] = arr[i + 1];
+    arr.length--;
+    return removed;
+}
+
+const arr = [10, 20, 30, 40];
+arrayDelete(arr, 2);
+console.log(arr);  // [10, 20, 40]

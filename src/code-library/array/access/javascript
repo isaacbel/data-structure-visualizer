@@ -1,0 +1,17 @@
+// O(1) random access.
+function access(arr, index) {
+    if (index < 0 || index >= arr.length)
+        throw new RangeError(`Index ${index} out of range`);
+    return arr[index];
+}
+
+function update(arr, index, value) {
+    if (index < 0 || index >= arr.length)
+        throw new RangeError(`Index ${index} out of range`);
+    arr[index] = value;
+}
+
+const arr = [10, 20, 30, 40];
+console.log(access(arr, 2));  // 30
+update(arr, 2, 99);
+console.log(arr);             // [10, 20, 99, 40]

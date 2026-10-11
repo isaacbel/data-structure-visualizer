@@ -1,0 +1,8 @@
+package main
+import "fmt"
+type RopeN struct{Val string;W int;L,R*RopeN}
+func leaf(s string)*RopeN{return&RopeN{Val:s,W:len(s)}}
+func concat(a,b*RopeN)*RopeN{return&RopeN{W:a.W,L:a,R:b}}
+func index(n*RopeN,i int)byte{if n.L==nil{return n.Val[i]};if i<n.W{return index(n.L,i)};return index(n.R,i-n.W)}
+func collect(n*RopeN)string{if n==nil{return""};if n.L==nil{return n.Val};return collect(n.L)+collect(n.R)}
+func main(){a:=leaf("Hello, ");b:=leaf("World!");r:=concat(a,b);fmt.Println(collect(r));fmt.Printf("%c\n",index(r,7))}
